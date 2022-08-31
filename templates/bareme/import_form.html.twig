@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BaremeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+    <div class="">
+        <div class="col">
+            {{ form_row(form.file) }}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.Importer) }}
+        </div>
+        <style>
+            #file-upload-button{
+                margin-right: 10%!important;
+            }
+        </style>
+    </div>
+{{ form_end(form) }}
+</div>
+{% endblock %}
