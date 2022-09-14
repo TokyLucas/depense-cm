@@ -99,7 +99,9 @@ class BaremeController extends AbstractController
         return $this->renderForm('bareme/import_form.html.twig', [
             'current_page' => 'Import bareme',
             'controller_name' => 'BaremeController',
-            'form' => $form
+            'form' => $form,
+            'firstFromLastBaremeEntry' => $rep->findByDatebareme('asc'),
+            'lastFromLastBaremeEntry' => $rep->findByDatebareme('desc'),
         ]);
     }
 

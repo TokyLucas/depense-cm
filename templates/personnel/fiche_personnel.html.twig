@@ -12,7 +12,10 @@
 
             </div>
             <div class="card-body row">
-                <div class="col-md-3">
+                <div class="col-md-6">
+                    <h1>{{fiche.getNom()}}</h1>
+                    <h4>née le {{fiche.getDatedenaissance() | date("M, d Y")}}</h4>
+                    <h4>{{fiche.getAge()}} ans</h4>
                     <table class="table table-sm">
                         <tbody>
                             <tr>
@@ -20,19 +23,65 @@
                                 <td>{{fiche.getId()}}</td>
                             </tr>
                             <tr>
-                                <th>Nom</th>
-                                <td>{{fiche.getNom()}}</td>
+                                <th>Matricule</th>
+                                <td>{{fiche.getId()}}</td>
                             </tr>
                             <tr>
                                 <th>Direction</th>
-                                <td></td>
+                                <td>{{fiche.getDirection()}}</td>
                             </tr>
                             <tr>
                                 <th>Contrat</th>
+                                <td>{{fiche.getContrat()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Indice</th>
+                                <td>{{fiche.getIndice()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Categorie</th>
+                                <td>{{fiche.getCategorie()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Nombre d'enfants</th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">Charges Sociales</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <a class="col-2 btn btn-primary mx-2 text-white">Ajouter + </a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>CNAPS</th>
                                 <td></td>
                             </tr>
                             <tr>
-                                <th>Date de naissance</th>
+                                <th>OSTIE</th>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">Indemnit&eacute;s</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <a class="col-2 btn btn-primary mx-2 text-white">Ajouter + </a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>Logement</th>
                                 <td></td>
                             </tr>
                         </tbody>

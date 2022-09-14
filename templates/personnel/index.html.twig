@@ -50,23 +50,27 @@
             </div>
             <div class="card-body">
                 <div class="">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-sm">
                         <tr>
-                            <th></th>
                             <th>CIN</th>
                             <th>Nom</th>
+                            <th>Prenom</th>
                             <th>Direction</th>
                             <th>Contrat</th>
+                            <th>Indice</th>
                         </tr>
                         <tbody>
                             {% if personnels|length > 0%}
                                {% for item in personnels %}
                                 <tr>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">Details</a>
+                                        <a href="personnel/{{item.getId()}}">{{item.getId()}}</a>
                                     </td>
-                                    <td>{{item.getId()}}</td>
-                                    <td>{{item.getNom()}}</td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getNom()}}
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% endfor %}              
                             {% endif %}

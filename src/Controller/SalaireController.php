@@ -89,10 +89,10 @@ class SalaireController extends AbstractController
             $this->setPdfHeader($pdf);
 
             $pdf->SetFont('Arial','',10);
-            $w = array(70, 25, 25, 25, 25, 25);
 
             // Header
             $header = [$personnel["nom"], 'MLE', 'INDICE', 'IMPUTATION', 'ENFANT(S)', 'Mois'];
+            $w = array($pdf->GetStringWidth($personnel["nom"]) + 25, 25, 25, 25, 25, 25);
             for($i=0;$i<count($header);$i++)
                 $pdf->Cell($w[$i],7,$header[$i],0,0,'C');
             $pdf->Ln();

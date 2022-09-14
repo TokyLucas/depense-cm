@@ -49,6 +49,7 @@ class BaremePersonnelRepository extends ServiceEntityRepository
         $sql = '
             SELECT * FROM v_bareme_par_personnel v
             WHERE v.direction_id = :direction_id
+            AND datebareme = (select datebareme from bareme order by datebareme desc limit 1)
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['direction_id' => $direction_id]);
@@ -57,6 +58,7 @@ class BaremePersonnelRepository extends ServiceEntityRepository
         $results = $resultSet->fetchAllAssociative();
         return $results;
    }
+
 
 //    public function findOneBySomeField($value): ?BaremePersonnel
 //    {

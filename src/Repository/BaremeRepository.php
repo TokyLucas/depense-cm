@@ -71,6 +71,29 @@ class BaremeRepository extends ServiceEntityRepository
         }
     }
 
+   /**
+    * @return BaremePersonnel[] Returns an array of BaremePersonnel objects
+    */
+    public function findByDatebareme($position): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = '';
+        if(strtolower($position) == 'asc'){
+            $sql .= '
+            SELECT * FROM bareme WHERE datebareme = (select max(datebareme) from bareme) ORDER BY id asc LIMIT 1
+            ';
+        } else {
+            $sql .= '
+            SELECT * FROM bareme WHERE datebareme = (select max(datebareme) from bareme) ORDER BY id desc LIMIT 1
+            ';
+        }
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['position' => $position]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        $results = $resultSet->fetchAllAssociative();
+        return $results;
+    }
 //    /**
 //     * @return Bareme[] Returns an array of Bareme objects
 //     */

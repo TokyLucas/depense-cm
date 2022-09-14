@@ -8,25 +8,98 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    {{ form_start(form) }}
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(form) }}
-    </div>
+<div class="col-lg-12" id="pdf">
+    <div class="card">
+        <div class="card-header">
+            <div class="alert alert-warning">
+                <h3>Remarques</h3>
+                <ul>
+                    <li>
+                        Faites en sortes que le fichier ne soit pas veroullier par un mot de passe.
+                    </li>
+                    <li>
+                        Faites en sortes que les colones dans le fichier soit comme-çi
+                        <br/>
+                        dates ; indice ; ...
+                    </li>
+                    <li>
+                        L'importation des données peut prendre quelques minutes.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body col-md-12 row">  
+            <div class="card-body col-md-4">
+                {{ form_start(form) }}
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(form) }}
+                </div>
 
-    <div class="">
-        <div class="col">
-            {{ form_row(form.file) }}
+                <div class="">
+                    <div class="col">
+                        {{ form_row(form.file) }}
+                    </div>
+                    <div class="col" id="some-custom-id">
+                        {{ form_row(form.Importer) }}
+                    </div>
+                    <style>
+                        #file-upload-button{
+                            margin-right: 10%!important;
+                        }
+                    </style>
+                </div>
+            {{ form_end(form) }}
+            </div>
+            <div class="card-body col-md-8">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="8">Derniers barème</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Categorie</th>
+                            <th>Indice</th>
+                            <th>v500</th>
+                            <th>v501</th>
+                            <th>v502</th>
+                            <th>v503</th>
+                            <th>v506</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if firstFromLastBaremeEntry|length > 0%}
+                           {% for item in firstFromLastBaremeEntry %}
+                            <tr>
+                                <td>{{ item.datebareme | date }}</td>
+                                <td>CAT {{ item.categorie }}</td>
+                                <td>{{ item.indice }}</td>
+                                <td>{{ item.v500 }}</td>
+                                <td>{{ item.v501 }}</td>
+                                <td>{{ item.v502 }}</td>
+                                <td>{{ item.v503 }}</td>
+                                <td>{{ item.v506 }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                        {% if lastFromLastBaremeEntry|length > 0%}
+                           {% for item in lastFromLastBaremeEntry %}
+                            <tr>
+                                <td>{{ item.datebareme | date }}</td>
+                                <td>CAT {{ item.categorie }}</td>
+                                <td>{{ item.indice }}</td>
+                                <td>{{ item.v500 }}</td>
+                                <td>{{ item.v501 }}</td>
+                                <td>{{ item.v502 }}</td>
+                                <td>{{ item.v503 }}</td>
+                                <td>{{ item.v506 }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="col" id="some-custom-id">
-            {{ form_row(form.Importer) }}
-        </div>
-        <style>
-            #file-upload-button{
-                margin-right: 10%!important;
-            }
-        </style>
     </div>
-{{ form_end(form) }}
 </div>
 {% endblock %}
