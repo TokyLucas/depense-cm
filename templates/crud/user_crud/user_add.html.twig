@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-12">
+        
+        <div class="card">
+            <div class="card-header row">
+                <a href="/directions/add" class="col-2 btn btn-primary mx-2">+ Ajouter une nouvelle direction</a>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+
+    <div class="col-lg-12" id="pdf">
+        <div class="card">
+            <div class="card-header">
+                <h1>Ajouter un nouvel Utilisateur</h1>
+            </div>
+            <div class="card-body">
+                <div class="">
+                    {{form(form)}}
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+{% endblock %}

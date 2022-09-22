@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DirectionRepository;
+use App\Repository\ContratRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DirectionRepository::class)
+ * @ORM\Entity(repositoryClass=ContratRepository::class)
  */
-class Direction
+class Contrat
 {
     /**
      * @ORM\Id
@@ -18,7 +18,7 @@ class Direction
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=5)
      */
     private $designation;
 

@@ -1,20 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="row">
+    <div class="col-lg-12">
+        
+        <div class="card">
+            <div class="card-header row">
+                <a href="/user/add" class="col-2 btn btn-primary mx-2">+ ajouter Utilisateurs</a>
+            </div>
+        </div>
+        <!-- /.card -->
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Toky Lucas/ITU/itupc/ITU/Stage/Commune Urbaine de Mahajanga/depense/depense-cm/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Toky Lucas/ITU/itupc/ITU/Stage/Commune Urbaine de Mahajanga/depense/depense-cm/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
+    </div>
+
+    <div class="col-lg-12" id="pdf">
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>Id</th>
+                            <th>Identifiant</th>
+                        </tr>
+                        <tbody>
+                            {% if personnels|length > 0 %}
+                               {% for item in personnels %}
+                                <tr>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">{{item.getId()}}</a>
+                                    </td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getIdentifiant()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {% if item.getRoles()|length > 0 %}
+                                            {% for role in item.getRoles() %}
+                                                <span class="badge badge-danger">{{role.getDesignation()}}</span>
+                                            {% endfor %}
+                                        {% else %}
+                                            <a href="user/addrole/{{item.getId()}}" class="btn btn-sm btn-primary">Ajouter role</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}              
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
 </div>
+<!-- /.container-fluid -->
 {% endblock %}

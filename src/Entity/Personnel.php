@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PersonnelRepository::class)
- * @ORM\Table(name="v_personnel_details")
+ * @ORM\Table(name="personnel")
  */
 class Personnel
 {
@@ -24,44 +24,29 @@ class Personnel
     private $nom;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $datedenaissance;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=20)
      */
-    private $age;
+    private $Matricule;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $CIN;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $datedenaissance;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $categorie;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $indice;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $direction_id;
-
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $direction;
-
-    /**
-     * @ORM\Column(type="string", length=4)
-     */
-    private $Contrat;
+    private $nbenfant;
 
     public function getId(): ?int
     {
@@ -104,74 +89,38 @@ class Personnel
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getMatricule(): ?string
     {
-        return $this->age;
+        return $this->Matricule;
     }
 
-    public function setAge(int $age): self
+    public function setMatricule(string $Matricule): self
     {
-        $this->age = $age;
+        $this->Matricule = $Matricule;
 
         return $this;
     }
 
-    public function getCategorie(): ?int
+    public function getCIN(): ?string
     {
-        return $this->categorie;
+        return $this->CIN;
     }
 
-    public function setCategorie(int $categorie): self
+    public function setCIN(string $CIN): self
     {
-        $this->categorie = $categorie;
+        $this->CIN = $CIN;
 
         return $this;
     }
 
-    public function getIndice(): ?int
+    public function getNbEnfant(): ?int
     {
-        return $this->indice;
+        return $this->nbenfant;
     }
 
-    public function setIndice(int $indice): self
+    public function setNbEnfant(int $nbenfant): self
     {
-        $this->indice = $indice;
-
-        return $this;
-    }
-
-    public function getDirectionId(): ?int
-    {
-        return $this->direction_id;
-    }
-
-    public function setDirectionId(int $direction_id): self
-    {
-        $this->direction_id = $direction_id;
-
-        return $this;
-    }
-
-    public function getDirection(): ?string
-    {
-        return $this->direction;
-    }
-
-    public function setDirection(string $direction): self
-    {
-        $this->direction = $direction;
-
-        return $this;
-    }
-
-    public function getContrat(): ?string
-    {
-        return $this->Contrat;
-    }
-
-    public function setContrat(string $Contrat): self
-    {
-        $this->Contrat = $Contrat;
+        $this->nbenfant = $nbenfant;
 
         return $this;
     }

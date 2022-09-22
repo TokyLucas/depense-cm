@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+<title>{% block title %} RH | {{ current_page }}{% endblock %}</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet"
+	href="{{ asset('plugins/fontawesome-free/css/all.min.css')}}">
+<!-- IonIcons -->
+<!-- Theme style -->
+<link rel="stylesheet"
+	href="{{ asset('dist/css/adminlte.min.css')}}">
+<!-- Google Font: Source Sans Pro -->
+</head>
+
+{% block body %}
+<body class="container-fluid center-flex">
+	<div class="my-auto">
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="card mx-auto col-12">
+
+            <style>
+                html, body {
+                    height: 100%!important;
+                    background-color: #d2d6de;
+                }
+                body {
+                    margin: 0;
+                }
+                .center-flex{
+                    display: flex;
+                    justify-content: center;
+                }
+                .btn-primary{
+                    background: #dbb10c!important;
+                    border-color:  #dbb10c!important;
+                }
+                .card{
+                    border-bottom: 3.5px solid #dbb10c!important;
+                }
+            </style>
+            
+            <div>
+                <div class="card-body col-12">
+                    <div class="center-flex">
+                        <img  width="200" height="200" src="{{ asset('img/logo-cm-removebg-preview.png')}}" />
+                    </div>
+                {{ form_start(form) }}
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form) }}
+                        {% if erreur | default(null) != null %}
+                            {% if erreur == 'creds' %}
+                                <p class="text-red text-center mt-2"><span class="badge badge-danger">Erreur</span> Identifiant ou mot de passe incorrecte.</p>
+                            {% elseif erreur == 'session' %}
+                                <p class="text-yellow text-center mt-2"><span class="badge badge-warning">Info</span> Session expiré</p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+            
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_label(form.identifiant) }}
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-id-badge"></i></div>
+                                </div>
+                                {{ form_widget(form.identifiant) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_label(form.motdepasse) }}
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                                </div>
+                                {{ form_widget(form.motdepasse) }}
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_widget(form.seconnecter) }}
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+		</div>
+	    </div>
+    </div>
+		<!-- ./wrapper -->
+
+		<!-- REQUIRED SCRIPTS -->
+
+		<!-- jQuery -->
+		<script
+			src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+		<!-- Bootstrap -->
+		<script
+			src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+		<!-- AdminLTE -->
+		<script
+			src="{{ asset('dist/js/adminlte.js')}}"></script>
+
+		<!-- OPTIONAL SCRIPTS -->
+		<script
+			src="{{ asset('plugins/chart.js/Chart.min.js')}}"></script>
+		<script
+			src="{{ asset('dist/js/demo.js')}}"></script>
+		<script
+			src="{{ asset('dist/js/pages/dashboard3.js')}}"></script>
+</body>
+{% endblock %}
+</html>

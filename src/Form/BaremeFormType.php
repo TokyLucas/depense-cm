@@ -21,7 +21,9 @@ class BaremeFormType extends AbstractType
             'label_attr' => ['class' => 'mr-2'],
             // unmapped means that this field is not associated to any entity property
             'mapped' => false,
-            'attr' => ['class' => ''],
+            'attr' => [
+                'class' => 'custom-file',
+            ],
             // make it optional so you don't have to re-upload the PDF file
             // every time you edit the Product details
             'required' => false,

@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Entity\UserRoles;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="users")
  */
 class User
 {
@@ -26,6 +29,8 @@ class User
      * @ORM\Column(type="string", length=100)
      */
     private $motdepasse;
+
+    private $roles;
 
     public function getId(): ?int
     {
@@ -52,6 +57,18 @@ class User
     public function setMotdepasse(string $motdepasse): self
     {
         $this->motdepasse = $motdepasse;
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles($roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }

@@ -7,6 +7,8 @@ use App\Repository\DirectionsRepository;
 use App\Repository\BaremePersonnelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SalaireController extends AbstractController
@@ -25,7 +27,7 @@ class SalaireController extends AbstractController
     /**
      * @Route("/salaire/general", methods={"GET"})
      */
-    public function etatgeneral(DirectionsRepository $rep): Response
+    public function etatgeneral(RequestStack $requestStack, DirectionsRepository $rep): Response
     {
         // $conn = $this->getEntityManager()->getConnection();
 
@@ -44,28 +46,19 @@ class SalaireController extends AbstractController
         return $this->render('salaire/etat_gle.html.twig', [
             'current_page' => 'Etat general',
             'controller_name' => 'SalaireController:etat_general',
-            'directions' => $results
+            'directions' => $results,
+            'user' => $requestStack->getSession()->get('USER')
         ]);
     }
 
         /**
-     * @Route("/salaire/direction/{id}", methods={"GET"})
+     * @Route("/salaire/direction/", methods={"GET"})
      */
-    public function etatdirection(BaremePersonnelRepository $rep, int $id): Response
+    public function etatdirection(Request $requestStack, BaremePersonnelRepository $rep): Response
     {
-        // $conn = $this->getEntityManager()->getConnection();
-
-        // $sql = '
-        //     SELECT * FROM product p
-        //     WHERE p.price > :price
-        //     ORDER BY p.price ASC
-        //     ';
-        // $stmt = $conn->prepare($sql);
-        // $resultSet = $stmt->executeQuery(['price' => $price]);
-
-        // // returns an array of arrays (i.e. a raw data set)
-        // $results = $resultSet->fetchAllAssociative();
-
+        date_default_timezone_set('Africa/Nairobi');
+        $date = isset($_GET['date']) ? $_GET['date'] : date('M Y');
+        $id = isset($_GET['direction']) ? $_GET['direction'] : -1;
         $results = $rep->findByDirection($id);
         $pdf = new \FPDF('P','mm','A4');
         foreach($results as $personnel){
@@ -89,7 +82,6 @@ class SalaireController extends AbstractController
             $this->setPdfHeader($pdf);
 
             $pdf->SetFont('Arial','',10);
-
             // Header
             $header = [$personnel["nom"], 'MLE', 'INDICE', 'IMPUTATION', 'ENFANT(S)', 'Mois'];
             $w = array($pdf->GetStringWidth($personnel["nom"]) + 25, 25, 25, 25, 25, 25);
@@ -98,7 +90,7 @@ class SalaireController extends AbstractController
             $pdf->Ln();
 
             $contrat = sprintf("D CAT %s",$personnel["categorie"]);
-            $personnel_info = [$contrat, 'MLE' ,$personnel["indice"]." FOP", '60 1 2', '0', 'Mois'];
+            $personnel_info = [$contrat, 'MLE' ,$personnel["indice"]." FOP", '60 1 2', '0', $date];
             for($i=0;$i<count($personnel_info);$i++)
                 $pdf->Cell($w[$i],7,$personnel_info[$i],0,0,'C');
             $pdf->Ln();

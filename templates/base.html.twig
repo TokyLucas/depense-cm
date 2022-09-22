@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title>{% block title %}Welcome!{% endblock %}</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+<title>{% block title %} RH | {{ current_page }}{% endblock %}</title>
+<link rel="icon" href="{{ asset('img/logo-cm-removebg-preview.png')}}">
+
 {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 {% block stylesheets %}
     {{ encore_entry_link_tags('app') }}
@@ -26,7 +27,20 @@
 <!-- Google Font: Source Sans Pro -->
 </head>
 
-<body class="hold-transition sidebar-mini" onload="now()">
+<body class="hold-transition sidebar-mini">
+	<style>
+		.btn-primary{
+			background: #dbb10c!important;
+			border-color:  #dbb10c!important;
+		}
+		.center-flex{
+			display: flex;
+			justify-content: center;
+		}
+		.card{
+			border-bottom: 3.5px solid #dbb10c!important;
+		}
+	</style>
 	<div class="wrapper">
 		<!-- Navbar -->
 		<nav
@@ -37,19 +51,31 @@
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 			</ul>
 
-			<!-- SEARCH FORM -->
-			<form class="form-inline ml-3">
-				<div class="input-group input-group-sm">
-					<input class="form-control form-control-navbar" type="search"
-						placeholder="Search" aria-label="Search">
-					<div class="input-group-append">
-						<button class="btn btn-navbar" type="submit">
-							<i class="fas fa-search"></i>
-						</button>
-					</div>
-				</div>
-			</form>
 
+			<ul class="navbar-nav ml-auto">
+				<!-- Messages Dropdown Menu -->
+				<li class="nav-item dropdown">
+				  <a class="nav-link" data-toggle="dropdown" href="#">
+					<i class="far fa-user"></i>
+				  </a>
+				  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+					<a href="#" class="dropdown-item">
+					  <!-- Message Start -->
+					  <div class="media">
+						<div class="media-body">
+						  <h3 class="dropdown-item-title">
+							{{user.identifiant}}
+						  </h3>
+						  <p class="text-sm badge badge-danger">Admin</p>
+						</div>
+					  </div>
+					  <!-- Message End -->
+					</a>
+					<div class="dropdown-divider"></div>
+					<a href="/deconnexion" class="dropdown-item dropdown-footer">Se deconnecter.</a>
+				  </div>
+				</li>
+			</ul>
 		</nav>
 		<!-- /.navbar -->
 		
@@ -57,8 +83,8 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="index.html" class="brand-link"> <span
-				class="brand-text font-weight-light">RH</span>
+			<a href="index.html" class="brand-link center-flex">
+				<img width="100" height="100" src="{{ asset('img/logo-cm-removebg-preview.png')}}" />
 			</a>
 			<!-- Sidebar -->
 			<div class="sidebar">
@@ -70,13 +96,15 @@
 						data-widget="treeview" role="menu" data-accordion="false">
 						<!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
-						<li class="nav-item"><a href="/personnel"
-							class="nav-link"> <i class="nav-icon fas fa-th"></i>
+						<li class="nav-item">
+							<a href="/personnel" class="nav-link">
+								<i class="nav-icon fas fa-address-book"></i>
 								<p>Personnel</p>
-						</a></li>
+							</a>
+						</li>
 						<li class="nav-item has-treeview menu-close">
 							<a href="#" class="nav-link">
-							  <i class="nav-icon fas fa-tachometer-alt"></i>
+							  <i class="nav-icon fas fa-money-bill-alt"></i>
 							  <p>
 								Salaire
 								<i class="right fas fa-angle-left"></i>
@@ -85,17 +113,54 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="/bareme/import" class="nav-link">
-										<i class="nav-icon fas fa-th"></i>
+										<i class="nav-icon fas fa-money-bill-alt"></i>
 										<p>Importer bareme</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="/salaire/general" class="nav-link">
-										<i class="nav-icon fas fa-th"></i>
+										<i class="nav-icon fas fa-money-bill-alt"></i>
 										<p>Etat general</p>
 									</a>
 								</li>
 							</ul>
+						</li>
+						<li class="nav-item has-treeview menu-close">
+							<a href="#" class="nav-link">
+							  <i class="nav-icon fas fa-pen-square"></i>
+							  <p>
+								Gestion des élements
+								<i class="right fas fa-angle-left"></i>
+							  </p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a href="/directions" class="nav-link">
+										<i class="nav-icon fas fa-pen-square"></i>
+										<p>Directions</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="/contrat" class="nav-link">
+										<i class="nav-icon fas fa-pen-square"></i>
+										<p>Contrat</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="nav-item has-treeview menu-close">
+							<a href="/user" class="nav-link">
+							  <i class="nav-icon fas fa-id-badge"></i>
+							  <p>
+								Utilisateurs
+							  </p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="/parametres" class="nav-link">
+								<i class="nav-icon fas fa-wrench"></i>
+								<p>Parametres généraux</p>
+							</a>
 						</li>
 					</ul>
 				</nav>

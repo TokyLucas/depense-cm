@@ -1,7 +1,11 @@
 index:
     path: /
-    controller: App\Controller\SalaireController::index
+    controller: App\Controller\PersonnelController::personnel
 
 bareme:
     path: /bareme/import
     controller: App\Controller\BaremeController::import_form
+
+connexion:
+    path: /connexion
+    controller: App\Controller\UserController::seConnecterForm

@@ -1,19 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PersonnelController!{% endblock %}
-
 {% block body %}
 
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
+                {{ form_start(form) }}
+                <div class="form-row">
+                    {{ form_widget(form.nom) }}
+                    {{ form_widget(form.prenom) }}
+                    {{ form_widget(form.direction) }}
+                    {{ form_widget(form.indice) }}
+                    {{ form_widget(form.contrat) }}
+                    {{ form_widget(form.rechercher) }}
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
         
         <div class="card">
             <div class="card-header row">
-                <a href="Immobilisation" class="col-2 btn btn-primary mx-2">+ ajouter nouveau personnel</a>
+                <a href="/personnel/add" class="col-2 btn btn-primary mx-2">+ ajouter nouveau personnel</a>
             </div>
         </div>
         <!-- /.card -->
@@ -23,9 +31,6 @@
     <div class="col-lg-12" id="pdf">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">
-                    <i class="ion ion-clipboard mr-1"></i> Immobilier
-                </h3>
 
                 <div class="card-tools row">
                     <div class="mx-2">
@@ -69,6 +74,26 @@
                                     <td>
                                         <a href="personnel/{{item.getId()}}">
                                             {{item.getNom()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getPrenom()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getDirection()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getContrat()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="personnel/{{item.getId()}}">
+                                            {{item.getIndice()}}
                                         </a>
                                     </td>
                                 </tr>
