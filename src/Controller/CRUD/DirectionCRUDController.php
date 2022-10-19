@@ -39,7 +39,7 @@ class DirectionCRUDController extends AbstractController
         $form = $this->createForm(DirectionsCRUDType::class, null);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entity = new Directions();
             $entity->setDesignation($form->get("designation")->getData());
             $drrep->add($entity, true);

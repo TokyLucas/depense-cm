@@ -41,8 +41,8 @@
                                     <td>
                                         {% if item.getRoles()|length > 0 %}
                                             {% for role in item.getRoles() %}
-                                                <span class="badge badge-danger">{{role.getDesignation()}}</span>
-                                            {% endfor %}
+                                                <span class="badge badge-{{role.getDesignation()}} text-white">{{role.getDesignation()}}</span>
+                                                {% endfor %}
                                         {% else %}
                                             <a href="user/addrole/{{item.getId()}}" class="btn btn-sm btn-primary">Ajouter role</a>
                                         {% endif %}

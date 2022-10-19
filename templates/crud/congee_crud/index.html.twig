@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-lg-12" id="pdf">
+        <div class="">
+            <div class="row">
+                <div class="card card-body mx-2 col-md-5">
+                    <div class="">
+                        <h1>Demande de congée</h1>
+                    </div>
+                    {{form(form)}}
+                </div>
+                <div class="card card-body col-md-6">
+
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>Id</th>
+                            <th>Motif</th>
+                            <th>Duree</th>
+                            <th>Date Debut</th>
+                            <th>Date Fin</th>
+                        </tr>
+                        <tbody>
+                            {% if congees|length > 0 %}
+                               {% for item in congees %}
+                                <tr>
+                                    <td>
+                                        {{item.getId()}}
+                                    </td>
+                                    <td>
+                                        {{item.getMotif()}}
+                                    </td>
+                                    <td>
+                                        {{item.getDuree()}}
+                                    </td>
+                                    <td>
+                                        {{item.getDatedebut() | date("M, d Y")}}
+                                    </td>
+                                    <td>
+                                        {{item.getDatefin() | date("M, d Y")}}
+                                    </td>
+                                </tr>
+                                {% endfor %}              
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+
+<script >
+    var duree = document.getElementById("congee_crud_duree");
+    var datedebut = document.getElementById("congee_crud_datedebut");
+    var datefin = document.getElementById("congee_crud_datefin");
+
+    function updateDebut(){
+        let d = new Date(datefin.value);
+        d.setDate(parseInt(d.getDate()) - duree.value);
+        let day = d.getDate();
+        let year = parseInt(d.getYear()) + 1900;
+        let month = parseInt(d.getMonth())  + 1;
+        day = (`${day}`.length < 2) ? "0"+day : day;
+        month = (`${month}`.length < 2) ? "0"+month : month;
+        datedebut.value = `${year}-${month}-${day}`;
+    }
+    function updateFin(){
+        let d = new Date(datedebut.value);
+        d.setDate(d.getDate() + parseInt(duree.value));
+        let day = d.getDate();
+        let year = parseInt(d.getYear()) + 1900;
+        let month = parseInt(d.getMonth()) + 1;
+        day = (`${day}`.length < 2) ? "0"+day : day;
+        month = (`${month}`.length < 2) ? "0"+month : month;
+        datefin.value = `${year}-${month}-${day}`;
+    }
+</script>
+<!-- /.container-fluid -->
+{% endblock %}

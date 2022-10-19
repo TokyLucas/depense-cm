@@ -40,6 +40,18 @@
 		.card{
 			border-bottom: 3.5px solid #dbb10c!important;
 		}
+		.bg-primary{
+			background: #dbb10c!important;
+		}
+		.nav-link.active{
+			background-color: #dbb10c!important;
+		}
+		.badge-admin{
+			background-color: #db4747!important;
+		}
+		.badge-depense{
+			background-color: #4cdf6c!important;
+		}
 	</style>
 	<div class="wrapper">
 		<!-- Navbar -->
@@ -62,12 +74,14 @@
 					<a href="#" class="dropdown-item">
 					  <!-- Message Start -->
 					  <div class="media">
-						<div class="media-body">
-						  <h3 class="dropdown-item-title">
-							{{user.identifiant}}
-						  </h3>
-						  <p class="text-sm badge badge-danger">Admin</p>
-						</div>
+							<div class="media-body">
+								<h3 class="dropdown-item-title">
+									{{user.identifiant}}
+								</h3>
+								{% for roles in user.getRoles()  %}
+									<p class="text-sm text-white badge badge-{{roles.getDesignation()}}">{{roles.getDesignation()}}</p>
+								{% endfor %}
+							</div>
 					  </div>
 					  <!-- Message End -->
 					</a>
@@ -94,37 +108,99 @@
 				<nav class="mt-2">
 					<ul class="nav nav-pills nav-sidebar flex-column"
 						data-widget="treeview" role="menu" data-accordion="false">
-						<!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
-						<li class="nav-item">
-							<a href="/personnel" class="nav-link">
-								<i class="nav-icon fas fa-address-book"></i>
-								<p>Personnel</p>
-							</a>
-						</li>
-						<li class="nav-item has-treeview menu-close">
-							<a href="#" class="nav-link">
-							  <i class="nav-icon fas fa-money-bill-alt"></i>
-							  <p>
-								Salaire
-								<i class="right fas fa-angle-left"></i>
-							  </p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="/bareme/import" class="nav-link">
-										<i class="nav-icon fas fa-money-bill-alt"></i>
-										<p>Importer bareme</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="/salaire/general" class="nav-link">
-										<i class="nav-icon fas fa-money-bill-alt"></i>
-										<p>Etat general</p>
-									</a>
-								</li>
-							</ul>
-						</li>
+						<li class="nav-header py-0"></li>
+						<li class="nav-header pl-2"><h6>Personnel</h6></li>
+							<li class="nav-item">
+								<a href="/personnel" class="nav-link">
+									<i class="nav-icon fas fa-address-book"></i>
+									<p>Personnel</p>
+								</a>
+							</li>
+							<li class="nav-item has-treeview menu-close">
+								<a href="#" class="nav-link">
+									<i class="nav-icon fas fa-pen-square"></i>
+									<p>
+										Alerte
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview pl-2">
+									<li class="nav-item">
+										<a href="/personnel/listecontratexpiree" class="nav-link">
+											<i class="nav-icon fas fa-pen-square"></i>
+											<p>
+												Fin de contrat
+											</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/personnel/listeretraite" class="nav-link">
+											<i class="nav-icon fas fa-pen-square"></i>
+											<p>Retraite</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-header pl-2"><h6>Salaire</h6></li>
+							<li class="nav-item has-treeview menu-close">
+								<a href="#" class="nav-link">
+									<i class="nav-icon fas fa-chart-bar"></i>
+									<p>
+										Statistiques
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview pl-2">
+									<li class="nav-item">
+										<a href="/salaire/statistiques/contrat/annuel" class="nav-link">
+											<i class="nav-icon fas fa-chart-bar"></i>
+											<p>Annuel par contrat </p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/salaire/statistiques/contrat/" class="nav-link">
+											<i class="nav-icon fas fa-chart-bar"></i>
+											<p>Mensuel par contrat</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/salaire/statistiques/direction" class="nav-link">
+											<i class="nav-icon fas fa-chart-bar"></i>
+											<p>Par directions</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li class="nav-item has-treeview menu-close">
+								<a href="#" class="nav-link">
+									<i class="nav-icon fas fa-money-bill-alt"></i>
+									<p>
+										Salaire
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview pl-2">
+									<li class="nav-item">
+										<a href="/bareme/import" class="nav-link">
+											<i class="nav-icon fas fa-money-bill-alt"></i>
+											<p>Importer bareme</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/salaire/general" class="nav-link">
+											<i class="nav-icon fas fa-money-bill-alt"></i>
+											<p>Etat general</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="/salaire/indemnite" class="nav-link">
+											<i class="nav-icon fas fa-money-bill-alt"></i>
+											<p>Indemnités</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+						<li class="nav-header pl-2"><h6>Gestion</h6></li>
 						<li class="nav-item has-treeview menu-close">
 							<a href="#" class="nav-link">
 							  <i class="nav-icon fas fa-pen-square"></i>
@@ -133,7 +209,7 @@
 								<i class="right fas fa-angle-left"></i>
 							  </p>
 							</a>
-							<ul class="nav nav-treeview">
+							<ul class="nav nav-treeview pl-2">
 								<li class="nav-item">
 									<a href="/directions" class="nav-link">
 										<i class="nav-icon fas fa-pen-square"></i>
@@ -154,12 +230,6 @@
 							  <p>
 								Utilisateurs
 							  </p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="/parametres" class="nav-link">
-								<i class="nav-icon fas fa-wrench"></i>
-								<p>Parametres généraux</p>
 							</a>
 						</li>
 					</ul>
@@ -217,8 +287,6 @@
 			src="{{ asset('dist/js/adminlte.js')}}"></script>
 
 		<!-- OPTIONAL SCRIPTS -->
-		<script
-			src="{{ asset('plugins/chart.js/Chart.min.js')}}"></script>
 		<script
 			src="{{ asset('dist/js/demo.js')}}"></script>
 		<script

@@ -3,28 +3,375 @@
 {% block body %}
 
 <div class="row">
-    <div class="col-lg-12">
-        
-        <div class="card">
-            <div class="card-header row">
-                <a href="/directions/add" class="col-2 btn btn-primary mx-2">+ Ajouter une nouvelle direction</a>
-            </div>
-        </div>
-        <!-- /.card -->
-
-    </div>
-
     <div class="col-lg-12" id="pdf">
+        
+        {{ form_start(form) }}
         <div class="card">
             <div class="card-header">
                 <h1>Ajouter un nouveau personnel</h1>
             </div>
-            <div class="card-body">
-                <div class="">
-                    {{form(form)}}
+            <div class="row my-2">
+                <div class="col-6">
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.nom) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.nom) | trans | raw }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.nom) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.prenom) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.prenom)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.prenom) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.CIN) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.CIN)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.CIN) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.datedenaissance) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.datedenaissance)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.datedenaissance) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.lieudenaissance) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.lieudenaissance)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.lieudenaissance) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.sexe) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.sexe)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.sexe) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.situationmatrimoniale) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.situationmatrimoniale)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.situationmatrimoniale) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-2">
+                        <div class="col-12 row">
+                            <div class="mx-2">
+                                {{ form_label(form.nbenfant) }}
+                            </div>
+                            <div>
+                                <span class="text-red">{{form_errors(form.nbenfant)}}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"></div>
+                                </div>
+                                {{ form_widget(form.nbenfant) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6 row">
+                    <div class="col-6">
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.poste) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.poste)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.poste) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.direction) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.direction)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.direction) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.contrat) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.contrat)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.contrat) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.indice) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.indice)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.indice) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.categorie) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.categorie)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.categorie) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.grade) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.grade)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.grade) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12">
+                                {{ form_label(form.matricule) }}
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.matricule) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.datefin) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.datefin)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.datefin) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.nbjourdetravailtemporaire) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.nbjourdetravailtemporaire)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.nbjourdetravailtemporaire) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
+                                    {{ form_label(form.heureparjour) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.heureparjour)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.heureparjour) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        var datefin_input = document.getElementById("personnel_crud_datefin");
+                        datefin_input.disabled = true;
+                        var nbjour_input = document.getElementById("personnel_crud_nbjourdetravailtemporaire");
+                        nbjour_input.disabled = true;
+                        var heure_input = document.getElementById("personnel_crud_heureparjour");
+                        heure_input.disabled = true;
+
+                        function toggledisable(){
+                            var contrat_input = document.getElementById("personnel_crud_contrat");
+                            var contrat = contrat_input.options[contrat_input.selectedIndex].innerHTML
+                            if(contrat == 'EMO'){
+                                datefin_input.disabled = false;
+                                nbjour_input.disabled = false;
+                                heure_input.disabled = false;
+                            }else{
+                                datefin_input.disabled = true;
+                                nbjour_input.disabled = true;
+                                heure_input.disabled = true;
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="row mx-1">
+                <div class="col-12 mx-1">
+                    {{ form_widget(form.ajouter) }}
                 </div>
             </div>
         </div>
+            {{ form_rest(form) }}
+        {{ form_start(form) }}
         <!-- /.card -->
 
     </div>
@@ -32,4 +379,12 @@
     <!-- /.row -->
 </div>
 <!-- /.container-fluid -->
+<script>
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
 {% endblock %}

@@ -21,8 +21,16 @@
         
         <div class="card">
             <div class="card-header row">
-                <a href="/personnel/add" class="col-2 btn btn-primary mx-2">+ ajouter nouveau personnel</a>
+                <a href="/personnel/add" class="btn btn-primary mx-2">+ ajouter nouveau personnel</a>
+                <a href="/personnel/listecontratexpiree" class="btn btn-primary mx-2"><span class="badge badge-danger">{{count['contrat_count']}}</span> Fin de contrat</a>
+                <a href="/personnel/listeretraite" class="btn btn-primary mx-2"><span class="badge badge-danger">{{count['retraite_count']}}</span> Retraite</a>
             </div>
+            <!-- <div class="card-header">
+                <a class="btn btn-primary text-white" href="/personnel"><span class="badge badge-danger">0</span> Demande d'explication</a>
+                <a class="btn btn-primary text-white" href="/personnel"><span class="badge badge-danger">0</span> Avertissements</a>
+                <a class="btn btn-primary text-white" href="/personnel"><span class="badge badge-danger">0</span> Congées</a>
+                <a class="btn btn-primary text-white" href="/personnel"><span class="badge badge-danger">0</span> Permission</a>
+            </div> -->
         </div>
         <!-- /.card -->
 
@@ -36,26 +44,25 @@
                     <div class="mx-2">
                         <div class="input-group input-group-sm">
                           <div class="input-group-prepend">
-                            <span class="input-group-text">Rows</span>
+                            <span class="input-group-text">Page actuelle</span>
                           </div>
-                          <input id="limit" type="number" class="form-control" placeholder="Limit" value="<%=limit%>" min="1">
-                          <script type="text/javascript">
-                                let input = document.getElementById("limit");
-                                input.onchange = () => {
-                                    var value = (input.value.length > 0) ? input.value : 1;
-                                    window.location.href = '?limit='+value;
-                                }
-                          </script>
+                          <input id="limit" type="number" class="form-control" value="{{pagination["page"]}}" disabled>
                         </div>
                     </div>
                     <ul class="pagination pagination-sm">
-                        <li class="page-item"><a href="?limit=<%= limit %>&page=1" class="page-link">First</a></li>
+                        {% if ((pagination["page"] - 1) > 0)%}
+                            <li class="page-item"><a href="?page={{pagination["page"] - 1 }}" class="page-link">{{pagination["page"] - 1}}</a></li>
+                        {% endif %}
+                        <li class="page-item"><a href="?page={{pagination["page"]}}" class="page-link">{{pagination["page"]}}</a></li>
+                        {% if ((pagination["maxcount"]) >= pagination["page"] * 10)%}
+                            <li class="page-item"><a href="?page={{pagination["page"] + 1 }}" class="page-link">{{pagination["page"] + 1}}</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
             <div class="card-body">
                 <div class="">
-                    <table class="table table-bordered table-sm">
+                    <table class="table table-bordered table-sm table-responsive-sm">
                         <tr>
                             <th>CIN</th>
                             <th>Nom</th>
@@ -69,30 +76,30 @@
                                {% for item in personnels %}
                                 <tr>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">{{item.getId()}}</a>
+                                        <a href="personnel/fiche/{{item.getId()}}">{{item.getCIN()}}</a>
                                     </td>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">
+                                        <a href="personnel/fiche/{{item.getId()}}">
                                             {{item.getNom()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">
+                                        <a href="personnel/fiche/{{item.getId()}}">
                                             {{item.getPrenom()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">
+                                        <a href="personnel/fiche/{{item.getId()}}">
                                             {{item.getDirection()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">
+                                        <a href="personnel/fiche/{{item.getId()}}">
                                             {{item.getContrat()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="personnel/{{item.getId()}}">
+                                        <a href="personnel/fiche/{{item.getId()}}">
                                             {{item.getIndice()}}
                                         </a>
                                     </td>
@@ -111,4 +118,16 @@
     <!-- /.row -->
 </div>
 <!-- /.container-fluid -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $("input").change(function(){
+            $("form").submit();
+        });
+        $("select").change(function(){
+            $("form").submit();
+        });
+    });
+</script>
+
 {% endblock %}

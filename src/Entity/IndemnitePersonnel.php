@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=IndemnitePersonnelRepository::class)
- * @ORM\Table(name="v_indemnite_personnel")
+ * @ORM\Table(name="personnel_indemnite")
  */
 class IndemnitePersonnel
 {
@@ -17,11 +17,6 @@ class IndemnitePersonnel
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $designation;
 
     /**
      * @ORM\Column(type="integer")
@@ -34,25 +29,13 @@ class IndemnitePersonnel
     private $IndemniteId;
 
     /**
-     * @ORM\Column(type="decimal", precision=15, scale=2)
+     * @ORM\Column(type="decimal", precision=15, scale=2, nullable=true)
      */
     private $montant;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDesignation(): ?string
-    {
-        return $this->designation;
-    }
-
-    public function setDesignation(string $designation): self
-    {
-        $this->designation = $designation;
-
-        return $this;
     }
 
     public function getPersonnelId(): ?int

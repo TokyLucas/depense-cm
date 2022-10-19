@@ -60,6 +60,8 @@
                                 <p class="text-red text-center mt-2"><span class="badge badge-danger">Erreur</span> Identifiant ou mot de passe incorrecte.</p>
                             {% elseif erreur == 'session' %}
                                 <p class="text-yellow text-center mt-2"><span class="badge badge-warning">Info</span> Session expiré</p>
+                            {% elseif erreur == 'clearance' %}
+                                <p class="text-red text-center mt-2"><span class="badge badge-danger">Info</span> Acces pour {{ clearence | default("admin") }} seulement</p>
                             {% endif %}
                         {% endif %}
                     </div>

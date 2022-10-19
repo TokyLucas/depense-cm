@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="row center-flex h-100">
+    <div class="col-3 mx-auto" id="pdf">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    <h3>Indemnité</h3>
+                </h3>
+
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <form method="POST" action="/salaire/indemnites">
+                        <label>Date</label>
+                        <input name="date" class="form-control mb-2" type="month">
+                        <label>Responsabilité de caisse de tresor</label>
+                        <input value="13000" name="resp" class="form-control mb-2" value="0" type="number">
+                        <label>Representation</label>
+                        <input value="300000" name="repr" class="form-control mb-2" value="0" type="number">
+                        <label>Pension alimentaire</label>
+                        <input value="18000" name="alim" class="form-control mb-2" value="0" type="number">
+                        <input class="form-control mb-2 btn btn-primary" type="submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+
+<script type="text/javascript">
+    // var today = new Date();
+    // var month = today.getMonth();
+    // month += 1;
+    // month += "";
+    // month = (month.length < 2 ) ? "0"+month : month;
+    // document.getElementById("month-selector").value = `${today.getFullYear()}-${month}`;
+    
+    // var links = document.getElementsByClassName('link');
+    // console.log(links);
+    // for (let item of links) {
+    //     item.href += `?date=${today.getFullYear()}-${month}`;
+    // }
+</script>
+
+{% endblock %}

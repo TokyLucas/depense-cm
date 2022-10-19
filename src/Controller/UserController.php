@@ -40,7 +40,7 @@ class UserController extends AbstractController
     /**
      * @Route("/connexion", name="se_connecter")
      */
-    public function seConnecterForm(RequestStack $requestStack, Request $request, UserRepository $rep): Response
+    public function seConnecterForm(RequestStack $requestStack, Request $request, UserRepository $rep, UserRolesRepository $urrep): Response
     {
         $form = $this->createForm(UserFormType::class, null);
         $form->handleRequest($request);
@@ -53,8 +53,12 @@ class UserController extends AbstractController
                 'identifiant' => $identifiant,
                 'motdepasse' => sha1($motdepasse)
             ]);
-
             if($data == null) return $this->redirect('/connexion?error=creds');
+
+            $roles = $urrep->findBy([
+                "user_id" => $data->getId()
+            ]);
+            $data->setRoles($roles);
 
             $session = $requestStack->getSession();
             $session->set('USER', $data);

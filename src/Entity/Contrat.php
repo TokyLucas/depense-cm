@@ -22,6 +22,13 @@ class Contrat
      */
     private $designation;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duree;
+
+    private $chargessociales;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +42,31 @@ class Contrat
     public function setDesignation(string $designation): self
     {
         $this->designation = $designation;
+
+        return $this;
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    
+    public function getChargesSociales(): ?array
+    {
+        return $this->chargessociales;
+    }
+
+    public function setChargesSociales(array $chargessociales): self
+    {
+        $this->chargessociales = $chargessociales;
 
         return $this;
     }

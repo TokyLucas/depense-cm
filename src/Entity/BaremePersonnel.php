@@ -78,6 +78,30 @@ class BaremePersonnel
      */
     private $direction;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contrat_id;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $contrat;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $personnel_id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $Prenom;
+
+    private $v505;
+    private $indemnites;
+    private $chargessociales;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -94,7 +118,7 @@ class BaremePersonnel
         return $this->datebareme;
     }
 
-    public function setDatebareme(\DateTimeInterface $datebareme): self
+    public function setDatebareme(?\DateTimeInterface $datebareme): self
     {
         $this->datebareme = $datebareme;
 
@@ -106,7 +130,7 @@ class BaremePersonnel
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategorie(?string $categorie): self
     {
         $this->categorie = $categorie;
 
@@ -118,7 +142,7 @@ class BaremePersonnel
         return $this->indice;
     }
 
-    public function setIndice(string $indice): self
+    public function setIndice(?string $indice): self
     {
         $this->indice = $indice;
 
@@ -130,7 +154,7 @@ class BaremePersonnel
         return $this->v500;
     }
 
-    public function setV500(string $v500): self
+    public function setV500(?string $v500): self
     {
         $this->v500 = $v500;
 
@@ -142,7 +166,7 @@ class BaremePersonnel
         return $this->v501;
     }
 
-    public function setV501(string $v501): self
+    public function setV501(?string $v501): self
     {
         $this->v501 = $v501;
 
@@ -154,7 +178,7 @@ class BaremePersonnel
         return $this->v502;
     }
 
-    public function setV502(string $v502): self
+    public function setV502(?string $v502): self
     {
         $this->v502 = $v502;
 
@@ -166,7 +190,7 @@ class BaremePersonnel
         return $this->v503;
     }
 
-    public function setV503(string $v503): self
+    public function setV503(?string $v503): self
     {
         $this->v503 = $v503;
 
@@ -178,7 +202,7 @@ class BaremePersonnel
         return $this->v506;
     }
 
-    public function setV506(string $v506): self
+    public function setV506(?string $v506): self
     {
         $this->v506 = $v506;
 
@@ -190,7 +214,7 @@ class BaremePersonnel
         return $this->solde;
     }
 
-    public function setSolde(string $solde): self
+    public function setSolde(?string $solde): self
     {
         $this->solde = $solde;
 
@@ -202,7 +226,7 @@ class BaremePersonnel
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -214,7 +238,7 @@ class BaremePersonnel
         return $this->direction_id;
     }
 
-    public function setDirectionId(int $direction_id): self
+    public function setDirectionId(?int $direction_id): self
     {
         $this->direction_id = $direction_id;
 
@@ -226,14 +250,50 @@ class BaremePersonnel
         return $this->direction;
     }
 
-    public function setDirection(string $direction): self
+    public function setDirection(?string $direction): self
     {
         $this->direction = $direction;
 
         return $this;
     }
 
-    public function __construct($id,$categorie,$indice,$v500,$v501,$v502,$v503,$v506,$solde,$nom,$direction_id,$direction)
+    public function getV505(): ?string
+    {
+        return $this->v505;
+    }
+
+    public function setV505(?string $v505): self
+    {
+        $this->v505 = $v505;
+
+        return $this;
+    }
+
+    public function getIndemnite(): ?string
+    {
+        return $this->indemnite;
+    }
+
+    public function setIndemnite(?string $indemnite): self
+    {
+        $this->indemnite = $indemnite;
+
+        return $this;
+    }
+
+    public function getChargesSociales(): ?array
+    {
+        return $this->chargessociales;
+    }
+
+    public function setChargesSociales(?array $chargessociales): self
+    {
+        $this->chargessociales = $chargessociales;
+
+        return $this;
+    }
+
+    public function __construct($id,$categorie,$indice,$v500,$v501,$v502,$v503,$v506,$solde,$nom,$direction_id,$direction,$contrat_id,$contrat)
     {
         $this->setId($id);
         $this->setCategorie($categorie);
@@ -247,6 +307,8 @@ class BaremePersonnel
         $this->setNom($nom);
         $this->setDirectionId($direction_id);
         $this->setDirection($direction);
+        $this->setContratId($contrat_id);
+        $this->setContrat($contrat);
     }
 
     public function getSousTotal01()
@@ -258,5 +320,141 @@ class BaremePersonnel
         $soustotal01 += floatval($this->getV506());
 
         return $soustotal01;
+    }
+    
+    public function getChargesSocial(){
+        $cs = 0;
+        $ch = $this->getChargesSociales();
+        if($ch != null){
+            foreach($ch as $charge){
+                $cs += ( $this->getSousTotal01() * ($charge->getPartSalariale() / 100) );
+            }
+        }
+        return $cs;
+    }
+
+    public function getCPR(){
+        return $this->getSousTotal01() * 0.05;
+    }
+
+    public function getCRCM(){
+        return $this->getSousTotal01() * 0.05;
+    }
+
+    public function getSousTotal02()
+    {
+        $soustotal02 = $this->getSousTotal01();
+        // if($this->getContrat() == "ECD")
+        //     $soustotal02 -= $this->getCNAPS();
+        // else if($this->getContrat() == "Fonctionnaire")
+        //     $soustotal02 -= $this->getCRCM();
+        // else
+        //     $soustotal02 -= $this->getCPR();
+        $ch = $this->getChargesSociales();
+        if($ch != null){
+            foreach($ch as $charge){
+                $soustotal02 -= ( $this->getSousTotal01() * ($charge->getPartSalariale() / 100) );
+            }
+        }
+        return $soustotal02;
+    }
+
+    public function getSousTotal03()
+    {
+        $soustotal03 = $this->getSousTotal02();
+
+        return $soustotal03;
+    }
+
+
+    public function getIRSA()
+    {
+        // return $this->getSousTotal01() * 0.2;
+
+        $s = $this->getSousTotal03();
+        // diffirent tranche de calcul
+        $tranche1 = $tranche2 = $tranche3 = $tranche4 = 0;
+        $irsa = 0;
+        $minimum = 3000;
+        // si inferieur a 350 000
+        // minimum de perception
+        if($s < 350000) return $minimum;
+        // sinon 
+        else {
+            
+            // 1ere tranche entre 350 et 400
+            if(350000<$s && $s <= 400000) $tranche1 = ($s - 350001) * 0.05;
+            else if (400000 < $s) $tranche1 = (400000 - 350001) * 0.05;
+            
+            // 2eme tranche entre 400 et 500
+            if(400000<$s && $s <= 500000) $tranche2 = ($s - 400001) * 0.1;
+            else if (500000 < $s) $tranche2 = (500000 - 400001) * 0.1;
+            
+            // 3eme tranche entre 500 et 600
+            if(500000<$s && $s <= 600000) $tranche3 = ($s - 500001) * 0.15;
+            else if (600000 < $s) $tranche3 = (600000 - 500001) * 0.15;
+            
+            // 4eme tranche < a 600
+            if(600000<$s) $tranche4 = ($s - 600001) * 0.2;
+            
+            // somme des tranche
+            $irsa += ($tranche1 + $tranche2 + $tranche3 + $tranche4); 
+            // minimum de perception
+            $irsa = ($irsa < $minimum) ? $irsa + $minimum : $irsa;
+            return round($irsa);
+        }
+    }
+
+    public function getNetAPayer()
+    {
+        return $this->getSousTotal03() - $this->getIRSA();
+    }
+
+    public function getContratId(): ?int
+    {
+        return $this->contrat_id;
+    }
+
+    public function setContratId(int $contrat_id): self
+    {
+        $this->contrat_id = $contrat_id;
+
+        return $this;
+    }
+
+    public function getContrat(): ?string
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(?string $contrat): self
+    {
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    public function getPersonnelId(): ?int
+    {
+        return $this->personnel_id;
+    }
+
+    public function setPersonnelId(int $personnel_id): self
+    {
+        $this->personnel_id = $personnel_id;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->Prenom;
+    }
+
+    public function setPrenom(?string $Prenom): self
+    {
+        $this->Prenom = $Prenom;
+
+        return $this;
     }
 }

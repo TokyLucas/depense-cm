@@ -46,9 +46,9 @@ class PersonnelDetailsRepository extends ServiceEntityRepository
    {   
         $query = $this->createQueryBuilder('p');
         $query->andWhere('p.nom like :nom');
-        $query->setParameter('nom', $nom."%");
+        $query->setParameter('nom', "%".$nom."%");
         $query->andWhere('p.prenom like :prenom');
-        $query->setParameter('prenom', $prenom."%");
+        $query->setParameter('prenom', "%".$prenom."%");
 
         if($dir != 'Tous'){
             $query->andWhere('p.direction_id = :direction_id');
@@ -64,6 +64,13 @@ class PersonnelDetailsRepository extends ServiceEntityRepository
         }
         
         return $query->getQuery()->getResult();
+   }
+
+   public function countById(){
+        return $this->createQueryBuilder('a')
+        ->select('count(a.id)')
+        ->getQuery()
+        ->getSingleScalarResult();
    }
 
 //    /**

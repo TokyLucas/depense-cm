@@ -3,6 +3,7 @@
 namespace App\Controller\CRUD;
 
 use App\Repository\UserRepository;
+use App\Repository\RolesRepository;
 use App\Repository\UserRoleRepository;
 use App\Repository\UserRolesRepository;
 
@@ -49,7 +50,7 @@ class UserCRUDController extends AbstractController
     /**
      * @Route("/user/addrole/{id}", name="user_add_role_form")
      */
-    public function addroleform(RequestStack $requestStack, Request $request, UserRepository $rep, UserRolesRepository $urrep, int $id): Response
+    public function addroleform(RequestStack $requestStack, Request $request, UserRepository $rep, RolesRepository $urrep, int $id): Response
     {
         $roles = $urrep->findAll();
         $user = $rep->find($id);

@@ -4,6 +4,7 @@ namespace App\Controller\CRUD;
 
 use App\Repository\UserRepository;
 use App\Repository\ContratRepository;
+use App\Repository\ContratChargeSocialDetailsRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +20,14 @@ class ContratCRUDController extends AbstractController
         /**
      * @Route("/contrat", name="app_contrat")
      */
-    public function index(RequestStack $requestStack, ContratRepository $crep): Response
+    public function index(RequestStack $requestStack, ContratRepository $crep, ContratChargeSocialDetailsRepository $ccsrep): Response
     {
         $results = $crep->findAll();
+        foreach($results as $result){
+            $result->setChargessociales($ccsrep->findBy([
+                "contrat_id" => $result->getId()
+            ]));
+        }
 
         return $this->render('crud/contrat_crud/index.html.twig', [
             'controller_name' => 'ContratCRUDController',
@@ -39,9 +45,10 @@ class ContratCRUDController extends AbstractController
         $form = $this->createForm(ContratsCRUDType::class, null);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entity = new Contrat();
             $entity->setDesignation($form->get("designation")->getData());
+            $entity->setDuree($form->get("duree")->getData());
             $crep->add($entity, true);
 
             return $this->redirect('/contrat');

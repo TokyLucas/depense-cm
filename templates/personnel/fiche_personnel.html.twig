@@ -16,8 +16,14 @@
                             <h1>{{fiche.getNom()}} {{fiche.getPrenom()}}</h1>
                         </div>
                     </div>
-                    <h4>née le {{fiche.getDatedenaissance() | date("M, d Y")}}</h4>
+                    <h4>née le {{fiche.getDatedenaissance() | date("M, d Y")}} à {{fiche.getLieudenaissance()}}</h4>
                     <h4>{{fiche.getAge()}} ans</h4>
+                    <p>
+                        <a class="btn btn-sm btn-primary text-white" href="/excuse/{{fiche.getId()}}"><span class="badge badge-danger">{{count["excuse"]}}</span> Demande d'explication</a>
+                        <a class="btn btn-sm btn-primary text-white" href="/avertissements/{{fiche.getId()}}"><span class="badge badge-danger">{{count["avertissement"]}}</span> Avertissements</a>
+                        <a class="btn btn-sm btn-primary text-white" href="/congee/{{fiche.getId()}}"><span class="badge badge-danger">{{count["congee"]}}</span> Congées</a>
+                        <a class="btn btn-sm btn-primary text-white" href="/permission/{{fiche.getId()}}"><span class="badge badge-danger">{{count["permission"]}}</span> Permission</a>
+                    </p>
                     <table class="table table-sm">
                         <tbody>
                             <tr>
@@ -25,8 +31,24 @@
                                 <td>{{fiche.getCIN()}}</td>
                             </tr>
                             <tr>
+                                <th>Sexe</th>
+                                <td>{{fiche.getSexe()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Situation matrimoniale</th>
+                                <td>{{fiche.getSituationmatrimoniale()}}</td>
+                            </tr>
+                            <tr>
                                 <th>Matricule</th>
-                                <td>{{fiche.getMatricule()}}</td>
+                                <td>{{fiche.getMatricule() | default("--")}}</td>
+                            </tr>
+                            <tr>
+                                <th>Poste</th>
+                                <td>{{fiche.getPoste()}}</td>
+                            </tr>
+                            <tr>
+                                <th>Service</th>
+                                <td>{{fiche.getService() | default("--")}}</td>
                             </tr>
                             <tr>
                                 <th>Direction</th>
@@ -45,12 +67,22 @@
                                 <td>{{fiche.getCategorie()}}</td>
                             </tr>
                             <tr>
+                                <th>Grade</th>
+                                <td>{{fiche.getGrade()}}</td>
+                            </tr>
+                            <tr>
                                 <th>Nombre d'enfants</th>
                                 <td>{{fiche.getNbenfant()}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-sm btn-primary text-white" href="/personnel/addposte/{{fiche.getId()}}"><i class="fas fa-pen-square"></i> Ajouter poste</a>
+                    <div class="row">
+                        <div>
+                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/editinfo/{{fiche.getId()}}">Modifier information personnel</a>
+                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/editposte/{{fiche.getId()}}">Modifier Poste</a>
+                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/remove/{{fiche.getId()}}">Supprimer personnel</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,11 +91,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-body">
-                        <form>
+                        <form method="GET" action="/salaire/direction">
                             <h3>Fiche de paie</h3>
                             <div class="form-row">
                                 <div class="col">
-                                    <input type="month" name="month" class="form-control"/>
+                                    <input id="month-selector" name="date" type="date" class="col mx-2 form-control">
+                                    <input value="{{fiche.getId()}}" name="personnel_id" type="hidden" class="col mx-2 form-control">
                                 </div>
                                 <div class="col">
                                     <input type="submit" value="Voir" class="form-control btn btn-sm btn-primary"/>
@@ -72,32 +105,21 @@
                         </form>
                     </div>
                     <div class="card card-body">
-                        <table class="table table-sm table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th colspan="3">Charges Sociales</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">
-                                        <a class="col-6 btn btn-primary btn-sm mx-2 text-white">Ajouter + </a>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card card-body">
-                        <table class="table table-sm table-bordered">
-                            <tbody>
-                                <tr>
-                                    <th colspan="3">Indemnit&eacute;s</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">
-                                        <a class="col-6 btn btn-primary btn-sm mx-2 text-white">Ajouter + </a>
-                                    </th>
-                                </tr>
-                            </tbody>
-                        </table>
+                        
+                        <div class="">
+                            <form method="POST" action="/salaire/indemnites">
+                                <label>Date</label>
+                                <input name="personnel_id" value="{{fiche.getId()}}" class="form-control mb-2" type="number" hidden>
+                                <input name="date" class="form-control mb-2" type="month">
+                                <label>Responsabilité de caisse de tresor</label>
+                                <input value="13000" name="resp" class="form-control mb-2" value="0" type="number">
+                                <label>Representation</label>
+                                <input value="300000" name="repr" class="form-control mb-2" value="0" type="number">
+                                <label>Pension alimentaire</label>
+                                <input value="18000" name="alim" class="form-control mb-2" value="0" type="number">
+                                <input class="form-control mb-2 btn btn-primary" type="submit">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

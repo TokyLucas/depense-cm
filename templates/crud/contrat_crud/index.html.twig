@@ -20,30 +20,29 @@
                 <h1>Contrats Existant</h1>
             </div>
             <div class="card-body">
-                <div class="">
-                    <table class="table table-bordered table-sm">
-                        <tr>
-                            <th>Id</th>
-                            <th>Identifiant</th>
-                        </tr>
-                        <tbody>
-                            {% if contrats|length > 0 %}
-                               {% for item in contrats %}
-                                <tr>
-                                    <td>
-                                        {{item.getId()}}
-                                    </td>
-                                    <td>
-                                        {{item.getDesignation()}}
-                                    </td>
-                                    <td>
-                                        <a href="/contrat/remove/{{item.getId()}}" onclick="alert('Etes-vous sûr ?')">Supprimer</a>
-                                    </td>
-                                </tr>
-                                {% endfor %}              
-                            {% endif %}
-                        </tbody>
-                    </table>
+                <div class="row">
+                    {% if contrats|length > 0 %}
+                        {% for item in contrats %}
+                        <div class="col-md-3">
+                            <div class="card col-md-12 px-0">
+                                <div class="card-header bg-primary">
+                                    <h6 class="card-title">{{item.getDesignation()}}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <li>Durée:  <span class="text-secondary">{{item.getDuree() | default("--")}} mois</li>
+                                        <li>Charges Sociale:</li>
+                                        {% for charges in item.getChargessociales() %}
+                                            <li>{{charges.getDesignation() | default("--")}}</li>
+                                            <li class="ml-3 text-secondary">Part Salariale: {{charges.getPartSalariale() | default("--")}}</li>
+                                            <li class="ml-3 text-secondary">Part Patronale: {{charges.getPartPatronale() | default("--")}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}              
+                    {% endif %}
                 </div>
             </div>
         </div>

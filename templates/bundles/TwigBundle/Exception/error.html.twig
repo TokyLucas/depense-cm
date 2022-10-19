@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Une erreur s'est produite</h1>
+
+    <p>
+        <a href="{{ path(app.request.headers.get('referer')) }}">
+            Retourner vers la page précedente
+        </a>
+    </p>
+{% endblock %}

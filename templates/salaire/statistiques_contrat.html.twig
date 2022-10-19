@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12" id="pdf">
+        <div class="">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <h3>Etat general mensuel par contrat</h3>
+                    </h3>
+                </div>
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                    <h3 class="card-title pt-2">
+                        <i class="fas fa-calendar-week mr-1"></i>
+                        Mois de {{stats["date"] | date('M, Y')}}
+                    </h3>
+                    <div class="card-tools">
+                        <div class="row">
+                            <form method="GET">
+                                <div class="row pr-2">
+                                    <input class="col mx-2 form-control" type="date" name="date">
+                                    <input class="col mr-2 btn-primary form-control" value="Rechercher" type="submit">
+                                </div>
+                            </form>
+                        </div> 
+                    </div>
+                </div><!-- /.card-header -->
+                <div class="card-header ui-sortable-handle" style="cursor: move;">
+                    <h3 class="card-title pt-2">
+                        <i class="fas fa-chart-pie mr-1"></i>
+                        Statistiques
+                    </h3>
+                    <div class="card-tools">
+                        <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                            <a class="nav-link active" href="#chart-tab" data-toggle="tab">Graphiques</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#table-tab" data-toggle="tab">Tableau detailée</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- /.card-header -->
+                <div class="card-body">
+                    <div class="tab-content p-0">
+                    <!-- Morris chart - Sales -->
+                        <div class="chart tab-pane" id="table-tab" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <table class="table table-bordered h-100 table-responsive-sm">
+                                <thead class="bg-primary">
+                                    <th class="col-2">Contrat</th>
+                                    <th class="col-2">Nombre de personnel</th>
+                                    <th>Salaire net</th>
+                                    <th>IRSA</th>
+                                    <th>Charges Soicales</th>
+                                </thead>
+                                <tbody>
+                                    {% if stats["stat"]|length > 0%}
+                                        {% for item in stats["stat"] %}
+                                            <tr>
+                                                <td>{{item["contrat"]}}</td>
+                                                <td>{{item["count"]}} personne(s)</td>
+                                                <td>{{item["sum"] | format_currency('MGA')}}</td>
+                                                <td>{{item["irsa"] | format_currency('MGA')}}</td>
+                                                <td>{{item["cnaps"] | format_currency('MGA')}}</td>
+                                            </tr>
+                                        {% endfor %}              
+                                    {% endif %}
+                                </tbody>
+                            </table>    
+                        </div>
+                        <div class="chart tab-pane active" id="chart-tab"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>          
+                            <canvas id="chart"></canvas>
+                        </div>  
+                    </div>
+                </div>
+                <div class="card-footer" style="display: block;">
+                    <div class="row">
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-secondary">Nombre de personnel total</span>
+                                <h5 class="description-header">{{ stats["total"]["count_total"] }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-secondary">IRSA Total </span>
+                                <h5 class="description-header">{{ stats["total"]["irsa_total"]| format_currency('MGA') }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-secondary">Salaire net Total </span>
+                                <h5 class="description-header">{{ stats["total"]["net_total"]| format_currency('MGA') }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="description-block border-right">
+                                <span class="description-percentage text-secondary">Charges Soicales Total</span>
+                                <h5 class="description-header">{{ stats["total"]["cnaps_total"] }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script src="{{ asset('plugins/chart.js/Chart.min.js')}}"></script>
+                <script>
+                    var formatter = new Intl.NumberFormat('mg-MG', {
+                        style: 'currency',
+                        currency: 'MGA',
+
+                        // These options are needed to round to whole numbers if that's what you want.
+                        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+                        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+                    });
+
+                    var stat = '{{ stats["stat"] | json_encode()| raw}}';
+                    stat.replace("$quot;", "\"");
+                    stat = JSON.parse(stat);
+                    const data = {
+                        datasets : [
+                            {
+                                label : 'Salaire net',
+                                data : stat.map(function(e) {
+                                    return e.sum;
+                                }),
+                                backgroundColor: '#dbb10c'
+                            },
+                            {
+                                label : 'IRSA',
+                                data : stat.map(function(e) {
+                                    return e.irsa;
+                                }),
+                                backgroundColor: '#17a2b8'
+                            } ,
+                            {
+                                label : 'Charges Soicales',
+                                data : stat.map(function(e) {
+                                    return e.cnaps;
+                                }),
+                                backgroundColor: '#E67E22'
+                            } 
+                        ],
+                        labels : stat.map(function(e) {
+                            return e.contrat;
+                        })
+                    };
+
+                    const config = {
+                        type : 'bar',
+                        data : data,
+                        options: {
+                            "legend": {"position": "top"},
+                            "scales": {
+                                "xAxes": [
+                                    {
+                                        "beginAtZero": true,
+                                        "ticks": {
+                                            "autoSkip": false,
+                                            "min": 0
+                                        }
+                                    }
+                                ],
+                                "yAxes": [
+                                    {   
+                                        "ticks": {
+                                            "beginAtZero": true,
+                                            "min":  0,
+                                            // Include a dollar sign in the ticks
+                                            callback: function(value, index, ticks) {
+                                                return formatter.format(value);
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    };
+
+                    const myChart = new Chart(document.getElementById('chart'), config);
+                    console.log(myChart.config.data);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-lg-12" id="pdf">
+        <div class="">
+            <div class="row">
+                <div class="card card-body mx-2 col-md-5">
+                    <div class="">
+                        <h1>Demande d' excuse</h1>
+                    </div>
+                    {{form(form)}}
+                </div>
+                <div class="card card-body col-md-6">
+
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>Id</th>
+                            <th>Motif</th>
+                            <th>Date</th>
+                        </tr>
+                        <tbody>
+                            {% if excuses|length > 0 %}
+                               {% for item in excuses %}
+                                <tr>
+                                    <td>
+                                        {{item.getId()}}
+                                    </td>
+                                    <td>
+                                        {{item.getMotif()}}
+                                    </td>
+                                    <td>
+                                        {{item.getDate() | date("M , d Y")}}
+                                    </td>
+                                </tr>
+                                {% endfor %}              
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+
+<!-- /.container-fluid -->
+{% endblock %}

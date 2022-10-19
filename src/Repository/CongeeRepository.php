@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ChargesSocialPersonnel;
+use App\Entity\Congee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ChargesSocialPersonnel>
+ * @extends ServiceEntityRepository<Congee>
  *
- * @method ChargesSocialPersonnel|null find($id, $lockMode = null, $lockVersion = null)
- * @method ChargesSocialPersonnel|null findOneBy(array $criteria, array $orderBy = null)
- * @method ChargesSocialPersonnel[]    findAll()
- * @method ChargesSocialPersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Congee|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Congee|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Congee[]    findAll()
+ * @method Congee[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ChargesSocialPersonnelRepository extends ServiceEntityRepository
+class CongeeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ChargesSocialPersonnel::class);
+        parent::__construct($registry, Congee::class);
     }
 
-    public function add(ChargesSocialPersonnel $entity, bool $flush = false): void
+    public function add(Congee $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ChargesSocialPersonnelRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ChargesSocialPersonnel $entity, bool $flush = false): void
+    public function remove(Congee $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ChargesSocialPersonnelRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ChargesSocialPersonnel[] Returns an array of ChargesSocialPersonnel objects
+//     * @return Congee[] Returns an array of Congee objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ChargesSocialPersonnelRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ChargesSocialPersonnel
+//    public function findOneBySomeField($value): ?Congee
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

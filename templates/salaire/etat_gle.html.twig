@@ -10,10 +10,19 @@
                 <form method="GET" action="/salaire/direction">
                     <div class="form-row">
                         <label class="col mx-2">Rechercher etat precédent :</label>
-                        <input id="month-selector" name="date" type="month" class="col mx-2 form-control">
+                        <input id="month-selector" name="date" type="date" class="col mx-2 form-control">
                         <select name="direction" class="col mx-2 form-control">
+                            <option value="-1">Tous</option>
                             {% if directions|length > 0%}
                                 {% for item in directions %}
+                                    <option value="{{item.getId()}}">{{item.getDesignation()}}</option>
+                                {% endfor %}              
+                            {% endif %}
+                        </select>
+                        <select name="contrat" class="col mx-2 form-control">
+                            <option value="-1">Tous</option>
+                            {% if contrats|length > 0%}
+                                {% for item in contrats %}
                                     <option value="{{item.getId()}}">{{item.getDesignation()}}</option>
                                 {% endfor %}              
                             {% endif %}
@@ -42,6 +51,9 @@
                             <th>Directions</th>
                         </tr>
                         <tbody>
+                            <tr>
+                                <td><a class="link" href="/salaire/direction/">Etat general</a></td>
+                            </tr>
                             {% if directions|length > 0%}
                                {% for item in directions %}
                                 <tr>

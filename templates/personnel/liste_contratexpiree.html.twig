@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-lg-12" id="pdf">
+        <div class="card">
+            <div class="card-header">
+                <h1>Contrat prèsque expiré</h1>
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <table class="table table-bordered table-sm">
+                        <tr>
+                            <th>CIN</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Age</th>
+                            <th>Jours restant avant expiration de contrat</th>
+                            <th>Date de fin de contrat</th>
+                        </tr>
+                        <tbody>
+                            {% if personnels|length > 0%}
+                               {% for item in personnels %}
+                                <tr>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">{{item.getCIN()}}</a>
+                                    </td>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                            {{item.getNom()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                            {{item.getPrenom()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                            {{item.getAge()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                            {{item.getDureeContratRestant()}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                            {{item.getDateFinContrat() | date('M, j Y')}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}              
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        $("input").change(function(){
+            $("form").submit();
+        });
+        $("select").change(function(){
+            $("form").submit();
+        });
+    });
+</script>
+
+{% endblock %}
