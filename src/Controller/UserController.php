@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Form\UserFormType;
+use App\Form\UsersEditPasswordType;
 
 class UserController extends AbstractController
 {
@@ -37,6 +38,44 @@ class UserController extends AbstractController
             'user' => $requestStack->getSession()->get('USER')
         ]);
     }
+
+    /**
+     * @Route("/profile/{id}", name="app_profile")
+     */
+    public function profile(RequestStack $requestStack, Request $request, UserRepository $rep, UserRolesRepository $urrep, int $id): Response
+    {
+        $profile = $rep->find($id);
+        $roles = $urrep->findBy([
+            "user_id" => $profile->getId()
+        ]);
+        $form = $this->createForm(UsersEditPasswordType::class, null);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $ancien = sha1($form->get("ancienmotdepasse")->getData());
+            $nouveau = sha1($form->get("nouveaumotdepasse")->getData());
+            $confirmation = sha1($form->get("confirmermotdepasse")->getData());
+            if($ancien != $profile->getMotdepasse()){
+                $this->addFlash('danger', 'Ancien mot de passe incorrecte');
+            }
+            else if($nouveau != $confirmation){
+                $this->addFlash('danger', 'Confirmation de mot de passe incorrecte');
+            }
+            else if(($ancien == $profile->getMotdepasse()) && ($nouveau == $confirmation)){
+                $profile->setMotdepasse($nouveau);
+                $rep->add($profile, true);
+                $this->addFlash('success', 'Mot de passe mis a jour');
+            }
+        }
+        $profile->setRoles($roles);
+        return $this->render('user/profile.html.twig', [
+            'current_page' => 'Utilisateurs',
+            'controller_name' => 'UserController',
+            'form' => $form->createView(),
+            'profile' => $profile,
+            'user' => $requestStack->getSession()->get('USER')
+        ]);
+    }
+
     /**
      * @Route("/connexion", name="se_connecter")
      */
@@ -53,7 +92,13 @@ class UserController extends AbstractController
                 'identifiant' => $identifiant,
                 'motdepasse' => sha1($motdepasse)
             ]);
-            if($data == null) return $this->redirect('/connexion?error=creds');
+            
+            // if($data == null) return $this->redirect('/connexion?error=creds');
+            if($data == null){
+                return $this->redirectToRoute('se_connecter', [
+                    "error" => "creds"
+                ]);
+            }
 
             $roles = $urrep->findBy([
                 "user_id" => $data->getId()
@@ -63,7 +108,8 @@ class UserController extends AbstractController
             $session = $requestStack->getSession();
             $session->set('USER', $data);
 
-            return $this->redirect('/personnel');
+            // return $this->redirect('/personnel');
+            return $this->redirectToRoute('app_personnel');
         }
 
         return $this->renderForm('user/connexion.html.twig', [

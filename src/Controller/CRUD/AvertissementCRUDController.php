@@ -36,7 +36,10 @@ class AvertissementCRUDController extends AbstractController
             $avertissement->setDate($form->get('date')->getData());
             $avertissement->setPersonnelId($form->get('personnel_id')->getData());
             $doctrine->getRepository(Avertissement::class)->add($avertissement, true);
-            return $this->redirect('/avertissements/'.$id);
+            // return $this->redirect('/avertissements/'.$id);
+            return $this->redirectToRoute('app_avertissements', [
+                "id" => $id
+            ]);
         }
         return $this->renderForm('crud/avertissement_crud/index.html.twig', [
             'controller_name' => 'AvertissementCRUDController',

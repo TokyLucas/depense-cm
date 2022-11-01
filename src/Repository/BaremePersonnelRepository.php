@@ -47,18 +47,20 @@ class BaremePersonnelRepository extends ServiceEntityRepository
 
         $sql = 
         '
-            select 
-                bareme.*, 
-                v.id as personnel_id,
-                v.nom,
-                v.prenom,
-                v.direction_id,
-                v.direction,
-                v.contrat_id,
-                v.contrat
-            from v_personnel_details as v
-            left join bareme on bareme.indice = v.indice and bareme.categorie = v.categorie
-            where v.personnel_id = :personnel_id and ifnull(datebareme,now()) <= :datebareme order by datebareme desc limit 1
+            select * from (
+                select 
+                    bareme.*, 
+                    v.id as personnel_id,
+                    v.nom,
+                    v.prenom,
+                    v.direction_id,
+                    v.direction,
+                    v.contrat_id,
+                    v.contrat
+                from v_personnel_details as v
+                left join bareme on bareme.indice = v.indice and bareme.categorie = v.categorie
+                where v.id = :personnel_id and ifnull(datebareme,:datebareme) <= :datebareme order by datebareme desc
+            )  as v  group by personnel_id
         ';
         // $sql = '
         //     SELECT * FROM v_bareme_par_personnel v

@@ -47,9 +47,11 @@ class PersonnelDetailsRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p');
         $query->andWhere('p.nom like :nom');
         $query->setParameter('nom', "%".$nom."%");
-        $query->andWhere('p.prenom like :prenom');
-        $query->setParameter('prenom', "%".$prenom."%");
 
+        if($prenom != null){
+            $query->andWhere('p.prenom like :prenom');
+            $query->setParameter('prenom', "%".$prenom."%");
+        }
         if($dir != 'Tous'){
             $query->andWhere('p.direction_id = :direction_id');
             $query->setParameter('direction_id', $dir);
@@ -62,7 +64,6 @@ class PersonnelDetailsRepository extends ServiceEntityRepository
             $query->andWhere('p.indice like :indice');
             $query->setParameter('indice', "%".$indice."%");
         }
-        
         return $query->getQuery()->getResult();
    }
 

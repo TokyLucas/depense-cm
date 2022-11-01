@@ -48,6 +48,7 @@ class BaremePersonnelTemporaireRepository extends ServiceEntityRepository
 
         $sql = 
         '
+            select * from   ( 
             select 
                 baremepersonneltemporaire.*, 
                 v.id as personnel_id,
@@ -61,7 +62,8 @@ class BaremePersonnelTemporaireRepository extends ServiceEntityRepository
                 v.heure_par_jour_temporaire
             from v_personnel_details as v
             join baremepersonneltemporaire on baremepersonneltemporaire.indice = v.indice
-            where v.id = :personnel_id and date <= :date order by date desc limit 1
+            where v.id = :personnel_id and date <= :date order by date desc
+            ) as t group by personnel_id
         ';
         // $sql = '
         //     SELECT * FROM v_bareme_par_personnel v

@@ -7,7 +7,7 @@
         
         <div class="card">
             <div class="card-header row">
-                <a href="/directions/add" class="col-2 btn btn-primary mx-2">+ Ajouter une nouvelle direction</a>
+                <a href="{{ path("app_direction_add")}}" class="col-2 btn btn-primary mx-2">+ Ajouter une nouvelle direction</a>
             </div>
         </div>
         <!-- /.card -->
@@ -37,7 +37,7 @@
                                         {{item.getDesignation()}}
                                     </td>
                                     <td>
-                                        <a href="/directions/remove/{{item.getId()}}" onclick="alert('Etes-vous sûr ?')">Supprimer</a>
+                                        <a href="{{ path("app_direction_remove", { id: item.getId() } ) }}" onclick="alert('Etes-vous sûr ?')">Supprimer</a>
                                     </td>
                                 </tr>
                                 {% endfor %}              

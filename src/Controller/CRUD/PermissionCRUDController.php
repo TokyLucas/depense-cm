@@ -38,7 +38,11 @@ class PermissionCRUDController extends AbstractController
             $congee->setDatefin($form->get('datefin')->getData());
             $congee->setPersonnelId($form->get('personnel_id')->getData());
             $doctrine->getRepository(Permission::class)->add($congee, true);
-            return $this->redirect('/permission/'.$id);
+            // return $this->redirect('/permission/'.$id);
+
+            return $this->redirectToRoute('app_permission', [
+                "id" => $id
+            ]);
         }
         
         return $this->renderForm('crud/permission_crud/index.html.twig', [

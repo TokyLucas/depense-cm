@@ -36,7 +36,11 @@ class ExcuseCRUDController extends AbstractController
             $excuse->setDate($form->get('date')->getData());
             $excuse->setPersonnelId($form->get('personnel_id')->getData());
             $doctrine->getRepository(Excuse::class)->add($excuse, true);
-            return $this->redirect('/excuse/'.$id);
+            // return $this->redirect('/excuse/'.$id);
+
+            return $this->redirectToRoute('app_excuse', [
+                "id" => $id
+            ]);
         }
         return $this->renderForm('crud/excuse_crud/index.html.twig', [
             'controller_name' => 'ExcuseCRUDController',

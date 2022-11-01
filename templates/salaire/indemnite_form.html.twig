@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="">
-                    <form method="POST" action="/salaire/indemnites">
+                    <form method="POST" action="{{ path("app_salaire_indemnitepdf")}}">
                         <label>Date</label>
                         <input name="date" class="form-control mb-2" type="month">
                         <label>Responsabilité de caisse de tresor</label>

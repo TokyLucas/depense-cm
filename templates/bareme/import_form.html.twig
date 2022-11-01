@@ -27,76 +27,147 @@
                 </ul>
             </div>
         </div>
-        <div class="card-body col-md-12 row">  
-            <div class="card-body col-md-4">
-            {{ form_start(form) }}
-                <div class="my-custom-class-for-errors">
-                    {{ form_errors(form) }}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mx-1">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="card-body col-md-12">
+            <div class="row">
+                <div class="card-body col-md-4">
+                {{ form_start(form) }}
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form) }}
+                    </div>
+    
+                    <div class="">
+                        <div class="col">
+                            {{ form_row(form.file) }}
+                        </div>
+                        <div class="col" id="some-custom-id">
+                            {{ form_row(form.Importer) }}
+                        </div>
+                        <style>
+                            #file-upload-button{
+                                margin-right: 10%!important;
+                            }
+                        </style>
+                    </div>
+                {{ form_end(form) }}
+                </div>
+                <div class="card-body col-md-4">
+                    <div class="">
+                        <img src="{{ asset('img/bareme-sample.png')}}" />
+                    </div> 
+                </div>
+                <!-- <div class="card-body col-md-8">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="8">Derniers barème</th>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <th>Categorie</th>
+                                <th>Indice</th>
+                                <th>v500</th>
+                                <th>v501</th>
+                                <th>v502</th>
+                                <th>v503</th>
+                                <th>v506</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if firstFromLastBaremeEntry|length > 0%}
+                               {% for item in firstFromLastBaremeEntry %}
+                                <tr>
+                                    <td>{{ item.datebareme | date }}</td>
+                                    <td>CAT {{ item.categorie }}</td>
+                                    <td>{{ item.indice }}</td>
+                                    <td>{{ item.v500 }}</td>
+                                    <td>{{ item.v501 }}</td>
+                                    <td>{{ item.v502 }}</td>
+                                    <td>{{ item.v503 }}</td>
+                                    <td>{{ item.v506 }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+                            {% if lastFromLastBaremeEntry|length > 0%}
+                               {% for item in lastFromLastBaremeEntry %}
+                                <tr>
+                                    <td>{{ item.datebareme | date }}</td>
+                                    <td>CAT {{ item.categorie }}</td>
+                                    <td>{{ item.indice }}</td>
+                                    <td>{{ item.v500 }}</td>
+                                    <td>{{ item.v501 }}</td>
+                                    <td>{{ item.v502 }}</td>
+                                    <td>{{ item.v503 }}</td>
+                                    <td>{{ item.v506 }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div> -->
+
+            </div>
+            <div class="row">
+                <div class="card-body col-md-4">
+                {{ form_start(form_irsa) }}
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form_irsa) }}
+                    </div>
+    
+                    <div class="">
+                        <div class="col">
+                            {{ form_row(form_irsa.file) }}
+                        </div>
+                        <div class="col" id="some-custom-id">
+                            {{ form_row(form_irsa.Importer) }}
+                        </div>
+                        <style>
+                            #file-upload-button{
+                                margin-right: 10%!important;
+                            }
+                        </style>
+                    </div>
+                {{ form_end(form_irsa) }}
+                </div>
+                <div class="card-body col-md-4">
+                    <div class="">
+                        <img src="{{ asset('img/irsa-sample.png')}}" />
+                    </div> 
                 </div>
 
-                <div class="">
-                    <div class="col">
-                        {{ form_row(form.file) }}
-                    </div>
-                    <div class="col" id="some-custom-id">
-                        {{ form_row(form.Importer) }}
-                    </div>
-                    <style>
-                        #file-upload-button{
-                            margin-right: 10%!important;
-                        }
-                    </style>
-                </div>
-            {{ form_end(form) }}
             </div>
-            <div class="card-body col-md-8">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th colspan="8">Derniers barème</th>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <th>Categorie</th>
-                            <th>Indice</th>
-                            <th>v500</th>
-                            <th>v501</th>
-                            <th>v502</th>
-                            <th>v503</th>
-                            <th>v506</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if firstFromLastBaremeEntry|length > 0%}
-                           {% for item in firstFromLastBaremeEntry %}
-                            <tr>
-                                <td>{{ item.datebareme | date }}</td>
-                                <td>CAT {{ item.categorie }}</td>
-                                <td>{{ item.indice }}</td>
-                                <td>{{ item.v500 }}</td>
-                                <td>{{ item.v501 }}</td>
-                                <td>{{ item.v502 }}</td>
-                                <td>{{ item.v503 }}</td>
-                                <td>{{ item.v506 }}</td>
-                            </tr>
-                            {% endfor %}
-                        {% endif %}
-                        {% if lastFromLastBaremeEntry|length > 0%}
-                           {% for item in lastFromLastBaremeEntry %}
-                            <tr>
-                                <td>{{ item.datebareme | date }}</td>
-                                <td>CAT {{ item.categorie }}</td>
-                                <td>{{ item.indice }}</td>
-                                <td>{{ item.v500 }}</td>
-                                <td>{{ item.v501 }}</td>
-                                <td>{{ item.v502 }}</td>
-                                <td>{{ item.v503 }}</td>
-                                <td>{{ item.v506 }}</td>
-                            </tr>
-                            {% endfor %}
-                        {% endif %}
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="card-body col-md-4">
+                    {{ form_start(form_temp) }}
+                        <div class="my-custom-class-for-errors">
+                            {{ form_errors(form_temp) }}
+                        </div>
+        
+                        <div class="">
+                            <div class="col">
+                                {{ form_row(form_temp.file) }}
+                            </div>
+                            <div class="col" id="some-custom-id">
+                                {{ form_row(form_temp.Importer) }}
+                            </div>
+                            <style>
+                                #file-upload-button{
+                                    margin-right: 10%!important;
+                                }
+                            </style>
+                        </div>
+                    {{ form_end(form_temp) }}
+                </div>
+                <div class="card-body col-md-4">
+                    <div class="">
+                        <img src="{{ asset('img/emo-sample.png')}}" />
+                    </div> 
+                </div>
+
             </div>
         </div>
     </div>

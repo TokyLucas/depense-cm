@@ -8,6 +8,8 @@ use Helpers\NumberUtils;
 use App\Entity\Bareme;
 use App\Entity\PersonnelDetails;
 use App\Entity\BaremePersonnel;
+use App\Entity\BaremeIrsa;
+use App\Entity\IntervalIrsa;
 use App\Entity\BaremePersonnelTemporaire;
 use App\Entity\Contrat;
 use App\Entity\Directions;
@@ -455,7 +457,16 @@ class SalaireController extends AbstractController
         $p = [];
         $results = $doctrine->getRepository(BaremePersonnel::class)->findByDatebareme($date);
         $contrats = $doctrine->getRepository(Contrat::class)->findAll();
-
+        $bareme_irsas = $doctrine->getRepository(BaremeIrsa::class)->findByDate($date);
+        $bareme_irsa = null;
+        $interval_irsa = [];
+        foreach($bareme_irsas as $bareme){
+            $bareme_irsa = $bareme;
+            $interval_irsa = $doctrine->getRepository(IntervalIrsa::class)->findBy([
+                "bareme_id" => $bareme->getId()
+            ]);
+        }
+        // dd($interval_irsa);
         $stats = [
             "date" => $date,
             "stat" => []
@@ -490,6 +501,8 @@ class SalaireController extends AbstractController
                 $personnel->setChargesSociales($doctrine->getRepository(ContratChargeSocialDetails::class)->findBy([
                     'contrat_id' => $personnel->getContratId()
                 ]));
+                $personnel->setBaremeIrsa($bareme_irsa);
+                $personnel->setIntervalIrsa($interval_irsa);
                 if($personnel->getContratId() == $contrat->getId()){
                     $sum += $personnel->getNetAPayer();
                     $cs = $personnel->getChargesSociales();
@@ -544,9 +557,24 @@ class SalaireController extends AbstractController
         for($i = 1; $i<= 12; $i++){
             $year = $annee."-".$i."-31";
             $temp = $doctrine->getRepository(BaremePersonnel::class)->findByDatebareme($year);
+
+            $bareme_irsas = $doctrine->getRepository(BaremeIrsa::class)->findByDate($year);
+            $bareme_irsa = null;
+            $interval_irsa = [];
+            foreach($bareme_irsas as $bareme){
+                $bareme_irsa = $bareme;
+                $interval_irsa = $doctrine->getRepository(IntervalIrsa::class)->findBy([
+                    "bareme_id" => $bareme->getId()
+                ]);
+            }
+
             $annuel[$i] = [
                 "mois" => $year,
-                "bareme" => $temp
+                "bareme" => $temp,
+                "irsa" => [
+                    "bareme" => $bareme_irsa,
+                    "interval" => $interval_irsa
+                ]
             ];
         }
         // dd($annuel);
@@ -576,6 +604,8 @@ class SalaireController extends AbstractController
                         $personnel["contrat_id"],
                         $personnel["contrat"]
                     );
+                    $p->setBaremeIrsa($annuel[$i]["irsa"]["bareme"]);
+                    $p->setIntervalIrsa($annuel[$i]["irsa"]["interval"]);
                     $p->setPersonnelId($personnel["personnel_id"]);
                     $p->setChargesSociales($doctrine->getRepository(ContratChargeSocialDetails::class)->findBy([
                         'contrat_id' => $p->getContratId()
@@ -638,6 +668,16 @@ class SalaireController extends AbstractController
         $results = $doctrine->getRepository(BaremePersonnel::class)->findByDatebareme($date);
         $directions = $doctrine->getRepository(Directions::class)->findAll();
 
+        $bareme_irsas = $doctrine->getRepository(BaremeIrsa::class)->findByDate($date);
+        $bareme_irsa = null;
+        $interval_irsa = [];
+        foreach($bareme_irsas as $bareme){
+            $bareme_irsa = $bareme;
+            $interval_irsa = $doctrine->getRepository(IntervalIrsa::class)->findBy([
+                "bareme_id" => $bareme->getId()
+            ]);
+        }
+
         $stats = [
             "date" => $date,
             "stat" => []
@@ -669,6 +709,8 @@ class SalaireController extends AbstractController
             $cnaps = 0;
             
             foreach($p as $personnel){
+                $personnel->setBaremeIrsa($bareme_irsa);
+                $personnel->setIntervalIrsa($interval_irsa);
                 $personnel->setChargesSociales($doctrine->getRepository(ContratChargeSocialDetails::class)->findBy([
                     'contrat_id' => $personnel->getContratId()
                 ]));

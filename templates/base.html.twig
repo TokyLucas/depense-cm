@@ -71,7 +71,7 @@
 					<i class="far fa-user"></i>
 				  </a>
 				  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-					<a href="#" class="dropdown-item">
+					<a href="/profile/{{user.id}}" class="dropdown-item">
 					  <!-- Message Start -->
 					  <div class="media">
 							<div class="media-body">
@@ -86,7 +86,7 @@
 					  <!-- Message End -->
 					</a>
 					<div class="dropdown-divider"></div>
-					<a href="/deconnexion" class="dropdown-item dropdown-footer">Se deconnecter.</a>
+					<a href="{{path("se_de_connecter")}}" class="dropdown-item dropdown-footer">Se deconnecter.</a>
 				  </div>
 				</li>
 			</ul>
@@ -111,7 +111,7 @@
 						<li class="nav-header py-0"></li>
 						<li class="nav-header pl-2"><h6>Personnel</h6></li>
 							<li class="nav-item">
-								<a href="/personnel" class="nav-link">
+								<a href="{{path("app_personnel")}}" class="nav-link">
 									<i class="nav-icon fas fa-address-book"></i>
 									<p>Personnel</p>
 								</a>
@@ -126,7 +126,7 @@
 								</a>
 								<ul class="nav nav-treeview pl-2">
 									<li class="nav-item">
-										<a href="/personnel/listecontratexpiree" class="nav-link">
+										<a href="{{path("app_personnel_listecontratexpiree")}}" class="nav-link">
 											<i class="nav-icon fas fa-pen-square"></i>
 											<p>
 												Fin de contrat
@@ -134,7 +134,7 @@
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="/personnel/listeretraite" class="nav-link">
+										<a href="{{path("app_personnel_listeretraite")}}" class="nav-link">
 											<i class="nav-icon fas fa-pen-square"></i>
 											<p>Retraite</p>
 										</a>
@@ -152,19 +152,19 @@
 								</a>
 								<ul class="nav nav-treeview pl-2">
 									<li class="nav-item">
-										<a href="/salaire/statistiques/contrat/annuel" class="nav-link">
+										<a href="{{path("app_salaire_etatsalaireparcontratstatsannuel")}}" class="nav-link">
 											<i class="nav-icon fas fa-chart-bar"></i>
 											<p>Annuel par contrat </p>
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="/salaire/statistiques/contrat/" class="nav-link">
+										<a href="{{path("app_salaire_etatsalaireparcontratstats")}}" class="nav-link">
 											<i class="nav-icon fas fa-chart-bar"></i>
 											<p>Mensuel par contrat</p>
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="/salaire/statistiques/direction" class="nav-link">
+										<a href="{{path("app_salaire_etatsalairepardirectionstats")}}" class="nav-link">
 											<i class="nav-icon fas fa-chart-bar"></i>
 											<p>Par directions</p>
 										</a>
@@ -181,19 +181,19 @@
 								</a>
 								<ul class="nav nav-treeview pl-2">
 									<li class="nav-item">
-										<a href="/bareme/import" class="nav-link">
+										<a href="{{path("app_bareme_import_form")}}" class="nav-link">
 											<i class="nav-icon fas fa-money-bill-alt"></i>
 											<p>Importer bareme</p>
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="/salaire/general" class="nav-link">
+										<a href="{{path("app_salaire_etatgeneral")}}" class="nav-link">
 											<i class="nav-icon fas fa-money-bill-alt"></i>
 											<p>Etat general</p>
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="/salaire/indemnite" class="nav-link">
+										<a href="{{path("app_salaire_indemniteform")}}" class="nav-link">
 											<i class="nav-icon fas fa-money-bill-alt"></i>
 											<p>Indemnités</p>
 										</a>
@@ -211,13 +211,13 @@
 							</a>
 							<ul class="nav nav-treeview pl-2">
 								<li class="nav-item">
-									<a href="/directions" class="nav-link">
+									<a href="{{path("app_direction")}}" class="nav-link">
 										<i class="nav-icon fas fa-pen-square"></i>
 										<p>Directions</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="/contrat" class="nav-link">
+									<a href="{{path("app_contrat")}}" class="nav-link">
 										<i class="nav-icon fas fa-pen-square"></i>
 										<p>Contrat</p>
 									</a>
@@ -225,7 +225,7 @@
 							</ul>
 						</li>
 						<li class="nav-item has-treeview menu-close">
-							<a href="/user" class="nav-link">
+							<a href="{{path("app_user")}}" class="nav-link">
 							  <i class="nav-icon fas fa-id-badge"></i>
 							  <p>
 								Utilisateurs

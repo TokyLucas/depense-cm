@@ -308,6 +308,15 @@ from contrat_chargesocial
 ;
 
 
+INSERT INTO personnel 
+	(`nom`, `prenom`, `cin`, `datedenaissance`, `nbenfant`, `situationmatrimoniale_id`, `lieudenaissance`, `sexe_id`)
+SELECT 
+	"Toky", `prenom`, null, `datedenaissance`, `nbenfant`, `situationmatrimoniale_id`, `lieudenaissance`, `sexe_id`
+FROM 
+	personnel
+WHERE 
+	nom = 'Toky';
+	
 -- select 
 -- 	bareme.*, 
 -- 	v.id as personnel_id,

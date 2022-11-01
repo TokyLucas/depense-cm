@@ -37,7 +37,7 @@ class UserCRUDController extends AbstractController
             $user->setMotdepasse(sha1($motdepasse));
             $rep->add($user, true);
 
-            return $this->redirect('/user');
+            return $this->redirectToRoute('app_user');
         }
 
         return $this->renderForm('crud/user_crud/user_add.html.twig', [
@@ -73,6 +73,6 @@ class UserCRUDController extends AbstractController
         $user_role->setRoleId($request->request->get('role_id'));
         $roles = $urrep->add($user_role, true);
 
-        return $this->redirect("/user");
+        return $this->redirectToRoute('app_user');
     }
 }

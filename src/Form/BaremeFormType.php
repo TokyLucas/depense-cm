@@ -14,8 +14,8 @@ class BaremeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // ->setAction('/bareme/import')
         $builder
-        ->setAction('/bareme/import')
         ->add('file', FileType::class, [
             'label' => 'Bareme',
             'label_attr' => ['class' => 'mr-2'],

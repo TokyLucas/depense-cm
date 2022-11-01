@@ -40,7 +40,10 @@ class IndemniteCRUDController extends AbstractController
             $indemnite->setIndemniteId($IndemniteId);
             $indemnite->setMontant($montant);
             $doctrine->getRepository(IndemnitePersonnel::class)->add($indemnite, true);
-            return $this->redirect("/personnel/fiche".$id);
+            // return $this->redirect("/personnel/fiche/".$id);
+            return $this->redirectToRoute('app_personnel_fiche', [
+                "id" => $id
+            ]);
         }
 
         return $this->renderForm('crud/indemnite_crud/index.html.twig', [
@@ -58,6 +61,10 @@ class IndemniteCRUDController extends AbstractController
     {
         $entity = $doctrine->getRepository(IndemnitePersonnel::class)->find($id);
         $doctrine->getRepository(IndemnitePersonnel::class)->remove($entity, true);
-        return $this->redirect('/personnel/fiche/'.$idpersonnel);
+        // return $this->redirect('/personnel/fiche/'.$idpersonnel);
+
+        return $this->redirectToRoute('app_personnel_fiche', [
+            "id" => $id
+        ]);
     }
 }

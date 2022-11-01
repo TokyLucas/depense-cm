@@ -25,30 +25,30 @@
                                {% for item in personnels %}
                                 <tr>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">{{item.getCIN()}}</a>
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">{{item.getCIN()}}</a>
                                     </td>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">
                                             {{item.getNom()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">
                                             {{item.getPrenom()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">
                                             {{item.getAge()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">
                                             {{item.getDureeContratRestant()}}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/personnel/fiche/{{item.getId()}}">
+                                        <a href="{{ path("app_personnel_fiche", { id: item.getId() } ) }}">
                                             {{item.getDateFinContrat() | date('M, j Y')}}
                                         </a>
                                     </td>

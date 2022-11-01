@@ -38,7 +38,11 @@ class CongeeCRUDController extends AbstractController
             $congee->setDatefin($form->get('datefin')->getData());
             $congee->setPersonnelId($form->get('personnel_id')->getData());
             $doctrine->getRepository(Congee::class)->add($congee, true);
-            return $this->redirect('/congee/'.$id);
+            // return $this->redirect('/congee/'.$id);
+
+            return $this->redirectToRoute('app_congee', [
+                "id" => $id
+            ]);
         }
 
         return $this->renderForm('crud/congee_crud/index.html.twig', [

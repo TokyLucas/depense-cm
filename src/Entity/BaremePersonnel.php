@@ -101,6 +101,8 @@ class BaremePersonnel
     private $v505;
     private $indemnites;
     private $chargessociales;
+    private $bareme_irsa;
+    private $interval_irsa;
 
     public function getId(): ?int
     {
@@ -292,6 +294,30 @@ class BaremePersonnel
 
         return $this;
     }
+    
+    public function getBaremeIrsa() 
+    {
+        return $this->bareme_irsa;
+    }
+
+    public function setBaremeIrsa($bareme_irsa): self
+    {
+        $this->bareme_irsa = $bareme_irsa;
+
+        return $this;
+    }
+
+    public function getIntervalIrsa(): ?array
+    {
+        return $this->interval_irsa;
+    }
+
+    public function setIntervalIrsa(?array $interval_irsa): self
+    {
+        $this->interval_irsa = $interval_irsa;
+
+        return $this;
+    }
 
     public function __construct($id,$categorie,$indice,$v500,$v501,$v502,$v503,$v506,$solde,$nom,$direction_id,$direction,$contrat_id,$contrat)
     {
@@ -367,43 +393,71 @@ class BaremePersonnel
     }
 
 
-    public function getIRSA()
-    {
-        // return $this->getSousTotal01() * 0.2;
-
+    public function getIRSA(){
         $s = $this->getSousTotal03();
-        // diffirent tranche de calcul
-        $tranche1 = $tranche2 = $tranche3 = $tranche4 = 0;
+        $bareme = $this->getBaremeIrsa();
+        $intervals = $this->getIntervalIrsa();
         $irsa = 0;
-        $minimum = 3000;
-        // si inferieur a 350 000
-        // minimum de perception
-        if($s < 350000) return $minimum;
-        // sinon 
-        else {
-            
-            // 1ere tranche entre 350 et 400
-            if(350000<$s && $s <= 400000) $tranche1 = ($s - 350001) * 0.05;
-            else if (400000 < $s) $tranche1 = (400000 - 350001) * 0.05;
-            
-            // 2eme tranche entre 400 et 500
-            if(400000<$s && $s <= 500000) $tranche2 = ($s - 400001) * 0.1;
-            else if (500000 < $s) $tranche2 = (500000 - 400001) * 0.1;
-            
-            // 3eme tranche entre 500 et 600
-            if(500000<$s && $s <= 600000) $tranche3 = ($s - 500001) * 0.15;
-            else if (600000 < $s) $tranche3 = (600000 - 500001) * 0.15;
-            
-            // 4eme tranche < a 600
-            if(600000<$s) $tranche4 = ($s - 600001) * 0.2;
-            
-            // somme des tranche
-            $irsa += ($tranche1 + $tranche2 + $tranche3 + $tranche4); 
-            // minimum de perception
-            $irsa = ($irsa < $minimum) ? $irsa + $minimum : $irsa;
-            return round($irsa);
+        $minimum = ($bareme != null) ? $bareme->getMin() : 0;
+        $tranches = [];
+        if($intervals != null){
+            foreach($intervals as $interval){
+                $min = $interval->getMin();
+                $max = $interval->getMax();
+                $pourcentage = $interval->getPourcentage() / 100;
+    
+                if($min<$s && $s <= $max){
+                    $tranche = ($s - ($min+1)) * $pourcentage;
+                    $tranches[] = $tranche;
+                }
+                else if ($max < $s && $max > 0) {
+                    $tranche = ($max - ($min+1)) * $pourcentage;
+                    $tranches[] = $tranche;
+                }
+            }
         }
+        foreach($tranches as $tranche) $irsa += $tranche;
+        $irsa = ($irsa < $minimum) ? $irsa + $minimum : $irsa;
+        return $irsa;
     }
+
+    // public function getIRSA()
+    // {
+    //     // return $this->getSousTotal01() * 0.2;
+
+    //     $s = $this->getSousTotal03();
+    //     // diffirent tranche de calcul
+    //     $tranche1 = $tranche2 = $tranche3 = $tranche4 = 0;
+    //     $irsa = 0;
+    //     $minimum = 3000;
+    //     // si inferieur a 350 000
+    //     // minimum de perception
+    //     if($s < 350000) return $minimum;
+    //     // sinon 
+    //     else {
+            
+    //         // 1ere tranche entre 350 et 400
+    //         if(350000<$s && $s <= 400000) $tranche1 = ($s - 350001) * 0.05;
+    //         else if (400000 < $s) $tranche1 = (400000 - 350001) * 0.05;
+            
+    //         // 2eme tranche entre 400 et 500
+    //         if(400000<$s && $s <= 500000) $tranche2 = ($s - 400001) * 0.1;
+    //         else if (500000 < $s) $tranche2 = (500000 - 400001) * 0.1;
+            
+    //         // 3eme tranche entre 500 et 600
+    //         if(500000<$s && $s <= 600000) $tranche3 = ($s - 500001) * 0.15;
+    //         else if (600000 < $s) $tranche3 = (600000 - 500001) * 0.15;
+            
+    //         // 4eme tranche < a 600
+    //         if(600000<$s) $tranche4 = ($s - 600001) * 0.2;
+            
+    //         // somme des tranche
+    //         $irsa += ($tranche1 + $tranche2 + $tranche3 + $tranche4); 
+    //         // minimum de perception
+    //         $irsa = ($irsa < $minimum) ? $irsa + $minimum : $irsa;
+    //         return round($irsa);
+    //     }
+    // }
 
     public function getNetAPayer()
     {
@@ -415,7 +469,7 @@ class BaremePersonnel
         return $this->contrat_id;
     }
 
-    public function setContratId(int $contrat_id): self
+    public function setContratId(?int $contrat_id): self
     {
         $this->contrat_id = $contrat_id;
 

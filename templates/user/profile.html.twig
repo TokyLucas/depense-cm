@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-lg-12" id="pdf">
+        <div class="card">
+            <div class="card-header">
+                <h2>Profile</h2>
+            </div>
+            <div class="card-body row">
+                <div class="col-6">
+                    <table class="table table-sm border">
+                        <tbody>
+                                <tr>
+                                    <th>
+                                        id
+                                    </th>
+                                    <td>
+                                        {{profile.getId()}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Identifiant
+                                    </th>
+                                    <td>
+                                        {{profile.getIdentifiant()}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Roles
+                                    </th>
+                                    <td>
+                                        {% if profile.getRoles()|length > 0 %}
+                                            {% for role in profile.getRoles() %}
+                                                <span class="badge badge-{{role.getDesignation()}} text-white">{{role.getDesignation()}}</span>
+                                                {% endfor %}
+                                        {% else %}
+                                            <a href="user/addrole/{{profile.getId()}}" class="btn btn-sm btn-primary">Ajouter role</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6 center-flex">
+                    <div class="col-9">
+                        <h2>Changer mot de passe</h2>
+                        {% for message in app.flashes('danger') %}
+                            <div class="alert alert-danger mx-1">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success mx-1">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+
+    </div>
+    <!-- /.col-md-6 -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+{% endblock %}

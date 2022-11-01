@@ -53,9 +53,13 @@ class PersonnelCRUDController extends AbstractController
         $situationmatrimoniale = [];
         $smdata = $doctrine->getRepository(Situationmatrimoniale::class)->findAll();
         foreach($smdata as $item) $situationmatrimoniale[$item->getDesignation()] = $item->getId();
+        $service = [];
+        $cdata = $doctrine->getRepository(Service::class)->findAll();
+        foreach($cdata as $item) $service[$item->getDesignation()] = $item->getId();
         
         $form = $this->createForm(PersonnelCRUDType::class, [
             'direction' => $direction,
+            'service' => $service,
             'contrat' => $contrat,
             'sexe' => $sexe,
             'situationmatrimoniale' => $situationmatrimoniale,
@@ -87,6 +91,7 @@ class PersonnelCRUDController extends AbstractController
                 $personnel_id = $personnel->getId();
 
                 $direction_id = $form->get('direction')->getData();
+                $service_id = $form->get('service')->getData();
                 $contrat_id = $form->get('contrat')->getData();
                 $categorie = $form->get('categorie')->getData();
                 $indice = $form->get('indice')->getData();
@@ -96,6 +101,7 @@ class PersonnelCRUDController extends AbstractController
                 $poste = new Poste();
                 $poste->setDesignation($designation);
                 $poste->setDirectionId($direction_id);
+                $poste->setServiceId($service_id);
                 $poste->setContratId($contrat_id);
                 $poste->setCategorie($categorie);
                 $poste->setIndice($indice);
@@ -123,7 +129,7 @@ class PersonnelCRUDController extends AbstractController
                 dd($ex);
             }
 
-            return $this->redirect('/personnel');
+            return $this->redirectToRoute('app_personnel');
         }
 
         return $this->renderForm('crud/personnel_crud/personnel_add.html.twig', [
@@ -160,7 +166,10 @@ class PersonnelCRUDController extends AbstractController
             $personnel_form_data->setSexeId($form->get('sexe_id')->getData());
             $personnel_form_data->setSituationmatrimonialeId($form->get('situationmatrimoniale_id')->getData());
             $doctrine->getRepository(Personnel::class)->add($personnel_form_data, true);
-            return $this->redirect('/personnel/fiche/'.$id);
+            // return $this->redirect('/personnel/fiche/'.$id);
+            return $this->redirectToRoute('app_personnel_fiche', [
+                "id" => $id
+            ]);
         }
         return $this->renderForm('crud/personnel_crud/personnel_edit.html.twig', [
             'current_page' => 'Personnel',
@@ -225,8 +234,10 @@ class PersonnelCRUDController extends AbstractController
             $doctrine->getRepository(PersonnelPoste::class)->add($personnelPoste, true);
 
             // dd($personnelPoste);
-
-            return $this->redirect('/personnel/fiche/'.$id);
+            // return $this->redirect('/personnel/fiche/'.$id);
+            return $this->redirectToRoute('app_personnel_fiche', [
+                "id" => $id
+            ]);
         }
         return $this->renderForm('crud/personnel_crud/personnel_edit_poste.html.twig', [
             'current_page' => 'Personnel',
@@ -279,6 +290,7 @@ class PersonnelCRUDController extends AbstractController
 
         $entity = $doctrine->getRepository(Personnel::class)->find($id);
         $doctrine->getRepository(Personnel::class)->remove($entity, true);
-        return $this->redirect('/personnel');
+        
+        return $this->redirectToRoute('app_personnel');
     }
 }

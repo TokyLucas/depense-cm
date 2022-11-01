@@ -200,6 +200,24 @@
                         <div class="row mx-2">
                             <div class="col-12 row">
                                 <div class="mx-2">
+                                    {{ form_label(form.service) }}
+                                </div>
+                                <div>
+                                    <span class="text-red">{{form_errors(form.service)}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"></div>
+                                    </div>
+                                    {{ form_widget(form.service) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col-12 row">
+                                <div class="mx-2">
                                     {{ form_label(form.contrat) }}
                                 </div>
                                 <div>
@@ -387,4 +405,5 @@
         });
     });
 </script>
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 {% endblock %}

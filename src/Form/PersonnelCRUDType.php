@@ -15,12 +15,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Validator\Constraints;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class PersonnelCRUDType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $notblank = new Constraints\NotBlank();
         $notblank->message = "Ce champ ne peut pas etre vide." ;
+
         $builder
             ->add('nom', TextType::class, [
                 'label_attr' => ['class' => 'mr-2'],
@@ -143,6 +147,18 @@ class PersonnelCRUDType extends AbstractType
                 'constraints' => array(
                     $notblank
                 ),
+            ])->add('service', ChoiceType::class, [
+                'attr' => [
+                    'class' => 'col form-control',
+                    'placeholder' => 'Service',
+                ],
+                'choices' => $options['data']["service"],
+                'mapped' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'constraints' => array(
+                    $notblank
+                ),
             ])
             ->add('contrat', ChoiceType::class, [
                 'label_attr' => ['class' => 'mr-2'],
@@ -238,7 +254,28 @@ class PersonnelCRUDType extends AbstractType
                 'attr' => ['class' => 'btn btn-primary my-2']
             ])
         ;
+
+        
+        // $builder->get('direction')->addEventListener(
+        //     FormEvents::POST_SUBMIT,
+        //     function (FormEvent $event) {
+        //       $form = $event->getForm();
+        //       $this->addService($form->getParent(), $form->getData());
+        //     }
+        // );
+
     }
+
+    // private function addService(FormInterface $form, $departement)
+    // {
+    //     dd($departement);
+    //     $service = [];
+    //     $form->add('ville', ChoicesType::class, [
+    //         'class'       => 'AppBundle\Entity\Ville',
+    //         'placeholder' => $service ? 'Sélectionnez votre ville' : 'Sélectionnez votre département',
+    //         'choices'     => $service ? $service->getVilles() : []
+    //     ]);
+    // }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -7,7 +7,7 @@
         
         <div class="card">
             <div class="card-header row">
-                <form method="GET" action="/salaire/direction">
+                <form method="GET" action="{{ path("app_salaire_etatdirection")}}">
                     <div class="form-row">
                         <label class="col mx-2">Rechercher etat precédent :</label>
                         <input id="month-selector" name="date" type="date" class="col mx-2 form-control">
@@ -52,12 +52,12 @@
                         </tr>
                         <tbody>
                             <tr>
-                                <td><a class="link" href="/salaire/direction/">Etat general</a></td>
+                                <td><a class="link" href="{{ path("app_salaire_etatdirection")}}">Etat general</a></td>
                             </tr>
                             {% if directions|length > 0%}
                                {% for item in directions %}
                                 <tr>
-                                    <td><a class="link" href="/salaire/direction/?direction={{item.getId()}}">{{item.getDesignation()}}</a></td>
+                                    <td><a class="link" href="{{ path("app_salaire_etatdirection", {direction: item.getId()} ) }}">{{item.getDesignation()}}</a></td>
                                 </tr>
                                 {% endfor %}              
                             {% endif %}

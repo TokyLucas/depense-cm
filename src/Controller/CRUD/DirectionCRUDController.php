@@ -44,7 +44,7 @@ class DirectionCRUDController extends AbstractController
             $entity->setDesignation($form->get("designation")->getData());
             $drrep->add($entity, true);
 
-            return $this->redirect('/directions');
+            return $this->redirectToRoute('app_direction');
         }
 
         return $this->renderForm('crud/direction_crud/directions_add.html.twig', [
@@ -62,6 +62,7 @@ class DirectionCRUDController extends AbstractController
     {
         $entity = $drrep->find($id);
         $drrep->remove($entity, true);
-        return $this->redirect('/directions');
+        
+        return $this->redirectToRoute('app_direction');
     }
 }

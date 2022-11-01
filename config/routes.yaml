@@ -1,11 +1,16 @@
 index:
     path: /
-    controller: App\Controller\PersonnelController::personnel
+    controller: App\Controller\PersonnelController::index
 
 bareme:
     path: /bareme/import
     controller: App\Controller\BaremeController::import_form
 
 connexion:
-    path: /connexion
+    path: /dprh/public/index.php/connexion
     controller: App\Controller\UserController::seConnecterForm
+
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+    prefix: /dprh/public/index.php/

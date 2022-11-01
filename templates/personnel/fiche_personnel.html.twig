@@ -19,10 +19,10 @@
                     <h4>née le {{fiche.getDatedenaissance() | date("M, d Y")}} à {{fiche.getLieudenaissance()}}</h4>
                     <h4>{{fiche.getAge()}} ans</h4>
                     <p>
-                        <a class="btn btn-sm btn-primary text-white" href="/excuse/{{fiche.getId()}}"><span class="badge badge-danger">{{count["excuse"]}}</span> Demande d'explication</a>
-                        <a class="btn btn-sm btn-primary text-white" href="/avertissements/{{fiche.getId()}}"><span class="badge badge-danger">{{count["avertissement"]}}</span> Avertissements</a>
-                        <a class="btn btn-sm btn-primary text-white" href="/congee/{{fiche.getId()}}"><span class="badge badge-danger">{{count["congee"]}}</span> Congées</a>
-                        <a class="btn btn-sm btn-primary text-white" href="/permission/{{fiche.getId()}}"><span class="badge badge-danger">{{count["permission"]}}</span> Permission</a>
+                        <a class="btn btn-sm btn-primary text-white" href="{{ path("app_excuse", { id: fiche.getId() } ) }}"><span class="badge badge-danger">{{count["excuse"]}}</span> Demande d'explication</a>
+                        <a class="btn btn-sm btn-primary text-white" href="{{ path("app_avertissements", { id: fiche.getId() } ) }}"><span class="badge badge-danger">{{count["avertissement"]}}</span> Avertissements</a>
+                        <a class="btn btn-sm btn-primary text-white" href="{{ path("app_congee", { id: fiche.getId() } ) }}"><span class="badge badge-danger">{{count["congee"]}}</span> Congées</a>
+                        <a class="btn btn-sm btn-primary text-white" href="{{ path("app_permission", { id: fiche.getId() } ) }}"><span class="badge badge-danger">{{count["permission"]}}</span> Permission</a>
                     </p>
                     <table class="table table-sm">
                         <tbody>
@@ -78,9 +78,9 @@
                     </table>
                     <div class="row">
                         <div>
-                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/editinfo/{{fiche.getId()}}">Modifier information personnel</a>
-                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/editposte/{{fiche.getId()}}">Modifier Poste</a>
-                            <a class="btn btn-sm btn-primary mr-2" href="/personnel/remove/{{fiche.getId()}}">Supprimer personnel</a>
+                            <a class="btn btn-sm btn-primary mr-2" href="{{ path("app_personnel_editinfo", { id: fiche.getId() } ) }}">Modifier information personnel</a>
+                            <a class="btn btn-sm btn-primary mr-2" href="{{ path("app_personnel_editposte", { id: fiche.getId() } ) }}">Modifier Poste</a>
+                            <a class="btn btn-sm btn-primary mr-2" href="{{ path("app_personnel_remove", { id: fiche.getId() } ) }}">Supprimer personnel</a>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-body">
-                        <form method="GET" action="/salaire/direction">
+                        <form method="GET" action="{{ path("app_salaire_etatdirection") }}">
                             <h3>Fiche de paie</h3>
                             <div class="form-row">
                                 <div class="col">
@@ -107,7 +107,7 @@
                     <div class="card card-body">
                         
                         <div class="">
-                            <form method="POST" action="/salaire/indemnites">
+                            <form method="POST" action="{{ path("app_salaire_indemnitepdf")}}">
                                 <label>Date</label>
                                 <input name="personnel_id" value="{{fiche.getId()}}" class="form-control mb-2" type="number" hidden>
                                 <input name="date" class="form-control mb-2" type="month">

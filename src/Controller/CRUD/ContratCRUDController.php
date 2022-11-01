@@ -51,7 +51,9 @@ class ContratCRUDController extends AbstractController
             $entity->setDuree($form->get("duree")->getData());
             $crep->add($entity, true);
 
-            return $this->redirect('/contrat');
+            // return $this->redirect('/contrat');
+            
+            return $this->redirectToRoute('app_contrat');
         }
 
         return $this->renderForm('crud/contrat_crud/contrat_add.html.twig', [
@@ -69,6 +71,8 @@ class ContratCRUDController extends AbstractController
     {
         $entity = $crep->find($id);
         $crep->remove($entity, true);
-        return $this->redirect('/contrat');
+        // return $this->redirect('/contrat');
+        
+        return $this->redirectToRoute('app_contrat');
     }
 }

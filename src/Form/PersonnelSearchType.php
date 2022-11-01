@@ -17,7 +17,6 @@ class PersonnelSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->setAction('/personnel')
             ->setMethod('POST')
             ->add('nom', TextType::class, [
                 'label_attr' => ['class' => 'mr-2'],
