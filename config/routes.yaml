@@ -10,7 +10,7 @@ connexion:
     path: /dprh/public/index.php/connexion
     controller: App\Controller\UserController::seConnecterForm
 
-controllers:
-    resource: ../src/Controller/
-    type: annotation
-    prefix: /dprh/public/index.php/
+# controllers:
+#     resource: ../src/Controller/
+#     type: annotation
+#     prefix: /dprh/public/index.php/

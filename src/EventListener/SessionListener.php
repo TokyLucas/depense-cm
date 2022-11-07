@@ -23,7 +23,8 @@ class SessionListener
         $pathInfo = $request->getPathInfo();
         $session = $request->getSession(); 
         $user = $session->get("USER");
-        if(!str_ends_with($pathInfo, '/dprh/public/index.php/connexion')){
+        // dd($pathInfo);
+        if(!str_ends_with($pathInfo, '/connexion')){
             $controller = $request->get("_controller");
 
             if ($user == null) {

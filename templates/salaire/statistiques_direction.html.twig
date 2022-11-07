@@ -61,9 +61,9 @@
                                             <tr>
                                                 <td>{{item["direction"]}}</td>
                                                 <td>{{item["count"]}} personne(s)</td>
-                                                <td>{{item["sum"] | format_currency('MGA')}}</td>
-                                                <td>{{item["irsa"] | format_currency('MGA')}}</td>
-                                                <td>{{item["cnaps"] | format_currency('MGA')}}</td>
+                                                <td>{{item["sum"]  }}</td>
+                                                <td>{{item["irsa"]  }}</td>
+                                                <td>{{item["cnaps"]  }}</td>
                                             </tr>
                                         {% endfor %}              
                                     {% endif %}
@@ -86,19 +86,19 @@
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
                                 <span class="description-percentage text-secondary">IRSA Total </span>
-                                <h5 class="description-header">{{ stats["total"]["irsa_total"]| format_currency('MGA') }}</h5>
+                                <h5 class="description-header">{{ stats["total"]["irsa_total"]  }}</h5>
                             </div>
                         </div>
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
                                 <span class="description-percentage text-secondary">Salaire net Total </span>
-                                <h5 class="description-header">{{ stats["total"]["net_total"]| format_currency('MGA') }}</h5>
+                                <h5 class="description-header">{{ stats["total"]["net_total"]  }}</h5>
                             </div>
                         </div>
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
                                 <span class="description-percentage text-secondary">Charges Soicales Total</span>
-                                <h5 class="description-header">{{ stats["total"]["cnaps_total"]| format_currency('MGA') }}</h5>
+                                <h5 class="description-header">{{ stats["total"]["cnaps_total"]  }}</h5>
                             </div>
                         </div>
                     </div>
