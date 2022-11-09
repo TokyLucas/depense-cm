@@ -28,4 +28,3 @@ temp/
 *.pub
 *.log
 /var/cache/**
-/var/sessions/**
