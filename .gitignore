@@ -28,3 +28,4 @@ temp/
 *.pub
 *.log
 /var/cache/**
+!.htaccess
